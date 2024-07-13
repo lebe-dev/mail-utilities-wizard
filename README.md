@@ -4,6 +4,8 @@
 
 A tiny web-service that helps send meter readings to utility companies.
 
+[На русском](README.ru.md)
+
 ## My story
 
 My aged parents send house counters to different public utilities by mail. Such companies don't have any web-sites or mobile apps.
