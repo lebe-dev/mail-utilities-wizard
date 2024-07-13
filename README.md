@@ -11,6 +11,8 @@ A tiny web-service that helps send meter readings to utility companies.
 My aged parents send house counters to different public utilities by mail. Such companies don't have any web-sites or mobile apps.
 Each utility company has own letter format requirements. It makes my parents to suffer.
 
+It's a great opportunity to try [Axum](https://github.com/tokio-rs/axum) after many years with [actix](https://github.com/actix/actix-web) ;)
+
 ## How it works
 
 A service provides web interface for user:
