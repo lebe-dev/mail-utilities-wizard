@@ -1,0 +1,7 @@
+/target
+/static
+/*.iml
+/.idea
+/config.yml
+/logs
+/data
