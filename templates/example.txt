@@ -1,0 +1,8 @@
+Hello,
+
+This is electricity counter for location {{ location }} for {{ month }}.
+
+Value is {{ counter_value }}.
+
+With best regards,
+{{ signature }}
