@@ -1,0 +1,24 @@
+port: 8080
+
+log-level: debug
+
+locations:
+  - name: 'Saint Petersburg, Nevsky Street, 123'
+    counters:
+    - name: 'Electricity'
+      mail: 'utilities@company.com'
+      # You can override default template name
+      #template: 'custom-template.txt'
+      # You can override default signature
+      #signature: 'Boris Britva'
+
+defaults:
+  template: 'example.txt'
+  signature: 'Evgeny Lebedev'
+
+mail:
+  from: eugene@mail.com
+  host: localhost
+  port: 1025
+  username: change-me
+  password: change-me
