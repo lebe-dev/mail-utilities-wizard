@@ -1,14 +1,17 @@
 use axum::{
     Router, routing::get,
 };
-use serde::{Deserialize, Serialize};
 
 use crate::config::file::loading_config_from_file;
 use crate::logging::get_logging_config;
+use crate::route::version::get_version_route;
 
 pub mod config;
 
 pub mod logging;
+pub mod route;
+
+pub const VERSION: &str = "0.1.0 #UNKNOWN";
 
 #[tokio::main]
 async fn main() {
@@ -23,14 +26,19 @@ async fn main() {
     }
 
     let app = Router::new()
-        .route("/", get(root));
+        .route("/", get(root))
+        .route("/api/version", get(get_version_route));
 
     let listener = tokio::net::TcpListener::bind(
         format!("127.0.0.1:{}", config.port)
     ).await.unwrap();
+
+    println!("MAIL UTILITIES WIZARD v{VERSION}");
+    println!("URL: http://127.0.0.1:{}", config.port);
+
     axum::serve(listener, app).await.unwrap();
 }
 
 async fn root() -> &'static str {
-    "MAIL UTILITIES WIZARD v0.1.0"
+    "UNDER DEVELOPMENT"
 }
