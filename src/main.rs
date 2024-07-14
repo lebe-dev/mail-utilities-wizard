@@ -10,6 +10,7 @@ pub mod config;
 
 pub mod logging;
 pub mod route;
+pub mod template;
 
 pub const VERSION: &str = "0.1.0 #UNKNOWN";
 
