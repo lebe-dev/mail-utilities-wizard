@@ -68,6 +68,7 @@ mod tests {
     use std::path::Path;
     use std::str::FromStr;
 
+    use email_type_rs::email::Email;
     use non_blank_string_rs::NonBlankString;
 
     use crate::config::AppConfig;
@@ -92,13 +93,13 @@ mod tests {
                     counters: vec![
                         Counter {
                             name: NonBlankString::from_str("Electricity").unwrap(),
-                            email: NonBlankString::from_str("electricity@company1.com").unwrap(),
+                            email: Email::from_str("electricity@company1.com").unwrap(),
                             template: "example.txt".to_string(),
                             signature: "Evgeny Lebedev".to_string(),
                         },
                         Counter {
                             name: NonBlankString::from_str("Water").unwrap(),
-                            email: NonBlankString::from_str("water@company2.com").unwrap(),
+                            email: Email::from_str("water@company2.com").unwrap(),
                             template: "custom-template.txt".to_string(),
                             signature: "Boris Britva".to_string(),
                         }
