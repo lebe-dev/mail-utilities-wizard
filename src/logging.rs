@@ -9,7 +9,7 @@ use log::LevelFilter;
 
 const FILE_APPENDER_NAME: &str = "file";
 
-const LOG_FILE_PATH: &str = "logs/kcd.log";
+const LOG_FILE_PATH: &str = "logs/app.log";
 
 fn get_logging_level_from_string(level: &str) -> LevelFilter {
     return match level {
