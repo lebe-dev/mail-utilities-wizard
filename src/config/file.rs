@@ -111,7 +111,7 @@ mod tests {
                 signature: NonBlankString::from_str("Evgeny Lebedev").unwrap(),
             },
             mail: MailConfig {
-                from: NonBlankString::from_str("eugene@mail.com").unwrap(),
+                from: Email::from_str("eugene@mail.com").unwrap(),
                 host: NonBlankString::from_str("localhost").unwrap(),
                 port: 1025,
                 username: "change-me".to_string(),

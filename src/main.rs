@@ -11,6 +11,10 @@ pub mod config;
 pub mod logging;
 pub mod route;
 pub mod template;
+pub mod mail;
+
+#[cfg(test)]
+pub mod tests;
 
 pub const VERSION: &str = "0.1.0 #UNKNOWN";
 
