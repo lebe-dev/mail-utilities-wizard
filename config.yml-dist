@@ -6,7 +6,7 @@ locations:
   - name: 'Saint Petersburg, Nevsky Street, 123'
     counters:
     - name: 'Electricity'
-      mail: 'utilities@company.com'
+      email: 'utilities@company.com'
       # You can override default template name
       #template: 'custom-template.txt'
       # You can override default signature

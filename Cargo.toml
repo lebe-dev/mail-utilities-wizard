@@ -17,6 +17,9 @@ config = { version = "0.14.0", features = ["yaml"] }
 non-blank-string-rs = "1.0.3"
 email-type-rs = "1.0.1"
 
+serde = { version = "1.0.204", features = ["derive"] }
+
+tokio = { version = "1.38.0", features = ["full"] }
 axum = "0.7.5"
 
 lettre = "0.11.7"
