@@ -6,11 +6,12 @@ locations:
   - name: 'Saint Petersburg, Nevsky Street, 123'
     counters:
     - name: 'Electricity'
-      email: 'utilities@company.com'
-      # You can override default template name
-      #template: 'custom-template.txt'
-      # You can override default signature
-      #signature: 'Boris Britva'
+      email: 'electricity@company1.com'
+
+    - name: 'Water'
+      email: 'water@company2.com'
+      template: 'custom-template.txt'
+      signature: 'Boris Britva'
 
 defaults:
   template: 'example.txt'

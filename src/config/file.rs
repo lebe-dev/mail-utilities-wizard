@@ -2,6 +2,8 @@ use config::Config;
 use log::info;
 
 use crate::config::AppConfig;
+use crate::config::counter::Counter;
+use crate::config::location::Location;
 
 pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppConfig> {
     info!("loading config from file '{config_file_path}'");
@@ -10,7 +12,50 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
         .add_source(config::File::with_name(config_file_path))
         .build()?;
 
-    let config = settings.try_deserialize::<AppConfig>()?;
+    let loaded_config = settings.try_deserialize::<AppConfig>()?;
+
+    let mut locations: Vec<Location> = vec![];
+
+    for location in loaded_config.locations {
+        let mut counters: Vec<Counter> = vec![];
+
+        for counter in location.counters {
+            let mut template = counter.template.clone();
+            let mut signature = counter.signature.clone();
+
+            if counter.template.is_empty() {
+                template = loaded_config.defaults.template.to_string();
+            }
+
+            if counter.signature.is_empty() {
+                signature = loaded_config.defaults.signature.to_string();
+            }
+
+            counters.push(
+                Counter {
+                    name: counter.name,
+                    email: counter.email,
+                    template,
+                    signature,
+                }
+            )
+        }
+
+        locations.push(
+            Location {
+                name: location.name,
+                counters,
+            }
+        )
+    }
+
+    let config = AppConfig {
+        port: loaded_config.port,
+        log_level: loaded_config.log_level,
+        locations,
+        defaults: loaded_config.defaults,
+        mail: loaded_config.mail,
+    };
 
     info!("config:");
     info!("{:?}", config);
@@ -47,9 +92,15 @@ mod tests {
                     counters: vec![
                         Counter {
                             name: NonBlankString::from_str("Electricity").unwrap(),
-                            email: NonBlankString::from_str("utilities@company.com").unwrap(),
-                            template: "".to_string(),
-                            signature: "".to_string(),
+                            email: NonBlankString::from_str("electricity@company1.com").unwrap(),
+                            template: "example.txt".to_string(),
+                            signature: "Evgeny Lebedev".to_string(),
+                        },
+                        Counter {
+                            name: NonBlankString::from_str("Water").unwrap(),
+                            email: NonBlankString::from_str("water@company2.com").unwrap(),
+                            template: "custom-template.txt".to_string(),
+                            signature: "Boris Britva".to_string(),
                         }
                     ]
                 }
