@@ -25,7 +25,7 @@
 	<meta name="description" content="Mail Utilities Wizard" />
 </svelte:head>
 
-<section>
+<section class="p-3">
 	{#if !pageLoading}
 	<h1>{data.config.page.header}</h1>
 	<div>{data.config.page.selectLocationText}</div>
