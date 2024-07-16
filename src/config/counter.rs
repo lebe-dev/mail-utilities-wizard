@@ -1,12 +1,11 @@
 use email_type_rs::email::Email;
 use non_blank_string_rs::NonBlankString;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(PartialEq, Deserialize, Clone, Debug)]
-#[serde(rename_all = "kebab-case")]
+#[derive(PartialEq, Serialize, Deserialize, Clone, Debug)]
 pub struct Counter {
     pub name: NonBlankString,
-    #[serde(alias = "account_id", alias = "accountId")]
+    #[serde(alias = "account-id", alias = "accountId")]
     pub account_id: NonBlankString,
     pub email: Email,
     #[serde(default)]

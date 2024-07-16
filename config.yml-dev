@@ -17,6 +17,23 @@ defaults:
   template: 'example.txt'
   signature: 'Evgeny Lebedev'
 
+page:
+  title: 'Mail Utilities Wizard'
+  header: 'Send utilities data'
+  select-location-text: 'Select location:'
+  select-location-dropdown: '- Location -'
+  account-id-label: 'Your account id:'
+  account-id-placeholder: '1234567'
+  email-label: 'Data will be sent to e-mail:'
+  send-confirm-msg: 'Do you want to continue?'
+  send-confirm-yes: 'Yes'
+  send-confirm-no: 'No'
+  send-button: 'Send'
+  send-more-button: 'Send more'
+  loading-msg: 'Sending..'
+  send-success-msg: 'Counter value has been sent'
+  send-error-msg: 'Unable to send counter data, contact john@company.com'
+
 mail:
   from: eugene@mail.com
   host: localhost
