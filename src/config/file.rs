@@ -118,17 +118,25 @@ mod tests {
             page: PageConfig {
                 title: NonBlankString::from_str("Mail Utilities Wizard").unwrap(),
                 header: NonBlankString::from_str("Send utilities data").unwrap(),
+
                 select_location_text: NonBlankString::from_str("Select location:").unwrap(),
                 select_location_dropdown: NonBlankString::from_str("- Location -").unwrap(),
+
                 account_id_label: NonBlankString::from_str("Your account id:").unwrap(),
                 account_id_placeholder: NonBlankString::from_str("1234567").unwrap(),
+
                 email_label: NonBlankString::from_str("Data will be sent to e-mail:").unwrap(),
+
                 send_confirm_msg: NonBlankString::from_str("Do you want to continue?").unwrap(),
                 send_confirm_yes: NonBlankString::from_str("Yes").unwrap(),
                 send_confirm_no: NonBlankString::from_str("No").unwrap(),
+
                 send_button: NonBlankString::from_str("Send").unwrap(),
                 send_more_button: NonBlankString::from_str("Send more").unwrap(),
-                loading_msg: NonBlankString::from_str("Sending..").unwrap(),
+
+                app_error_msg: NonBlankString::from_str("Application error").unwrap(),
+
+                sending_msg: NonBlankString::from_str("Sending..").unwrap(),
                 send_success_msg: NonBlankString::from_str("Counter value has been sent").unwrap(),
                 send_error_msg: NonBlankString::from_str("Unable to send counter data, contact john@company.com").unwrap(),
             },

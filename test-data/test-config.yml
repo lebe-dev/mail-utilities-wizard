@@ -32,7 +32,8 @@ page:
   send-confirm-no: 'No'
   send-button: 'Send'
   send-more-button: 'Send more'
-  loading-msg: 'Sending..'
+  app-error-msg: 'Application error'
+  sending-msg: 'Sending..'
   send-success-msg: 'Counter value has been sent'
   send-error-msg: 'Unable to send counter data, contact john@company.com'
 

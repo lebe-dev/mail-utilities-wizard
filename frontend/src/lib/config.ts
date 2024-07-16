@@ -9,6 +9,19 @@ export class PageConfig {
     header: string = '';
 
     selectLocationText: string = '';
+    selectLocationDropdown: string = '';
+    accountIdLabel: string = '';
+    accountIdPlaceholder: string = '';
+    emailLabel: string = '';
+    sendConfirmMsg: string = '';
+    sendConfirmYes: string = '';
+    sendConfirmNo: string = '';
+    sendButton: string = '';
+    sendMoreButton: string = '';
+    appErrorMsg: string = '';
+    sendingMsg: string = '';
+    sendSuccessMsg: string = '';
+    sendErrorMsg: string = '';
 }
 
 export class Location {
