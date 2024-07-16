@@ -6,9 +6,11 @@ locations:
   - name: 'Saint Petersburg, Nevsky Street, 123'
     counters:
     - name: 'Electricity'
+      account-id: '85678463456'
       email: 'electricity@company1.com'
 
     - name: 'Water'
+      account-id: '568346545734'
       email: 'water@company2.com'
       template: 'custom-template.txt'
       signature: 'Boris Britva'

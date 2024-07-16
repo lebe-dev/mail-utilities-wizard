@@ -6,6 +6,8 @@ use serde::Deserialize;
 #[serde(rename_all = "kebab-case")]
 pub struct Counter {
     pub name: NonBlankString,
+    #[serde(alias = "account_id", alias = "accountId")]
+    pub account_id: NonBlankString,
     pub email: Email,
     #[serde(default)]
     pub template: String,

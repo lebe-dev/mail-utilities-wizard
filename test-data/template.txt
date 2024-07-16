@@ -1,5 +1,7 @@
 Hello,
 
+My account id is {{ account_id }}.
+
 This is {{ counter_name }} counter for location {{ location }} for {{ month }}.
 
 Value is {{ counter_value }}.

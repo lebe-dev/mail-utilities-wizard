@@ -7,6 +7,7 @@ use crate::config::counter::Counter;
 
 pub const LOCATION_NAME_TEMPLATE_VAR: &str = "location";
 pub const COUNTER_NAME_TEMPLATE_VAR: &str = "counter_name";
+pub const COUNTER_ACCOUNT_ID_TEMPLATE_VAR: &str = "account_id";
 pub const COUNTER_VALUE_TEMPLATE_VAR: &str = "counter_value";
 pub const MONTH_TEMPLATE_VAR: &str = "month";
 pub const SIGNATURE_TEMPLATE_VAR: &str = "signature";
@@ -17,6 +18,7 @@ pub fn get_template_vars(location_name: &str, month: &str, counter: &Counter,
         (LOCATION_NAME_TEMPLATE_VAR.to_string(), location_name.to_string()),
         (MONTH_TEMPLATE_VAR.to_string(), month.to_string()),
         (COUNTER_NAME_TEMPLATE_VAR.to_string(), counter.name.to_string()),
+        (COUNTER_ACCOUNT_ID_TEMPLATE_VAR.to_string(), counter.account_id.to_string()),
         (COUNTER_VALUE_TEMPLATE_VAR.to_string(), counter_value.to_string()),
         (SIGNATURE_TEMPLATE_VAR.to_string(), counter.signature.to_string()),
     ])
@@ -61,6 +63,7 @@ mod tests {
 
         let counter = Counter {
             name: NonBlankString::from_str("Electricity").unwrap(),
+            account_id: NonBlankString::from_str("92358457293485").unwrap(),
             email: Email::from_str("whatever@company.com").unwrap(),
             template: "whatever".to_string(),
             signature: "Evgeny Lebedev".to_string(),

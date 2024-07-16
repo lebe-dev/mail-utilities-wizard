@@ -34,6 +34,7 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
             counters.push(
                 Counter {
                     name: counter.name,
+                    account_id: counter.account_id,
                     email: counter.email,
                     template,
                     signature,
@@ -93,12 +94,14 @@ mod tests {
                     counters: vec![
                         Counter {
                             name: NonBlankString::from_str("Electricity").unwrap(),
+                            account_id: NonBlankString::from_str("85678463456").unwrap(),
                             email: Email::from_str("electricity@company1.com").unwrap(),
                             template: "example.txt".to_string(),
                             signature: "Evgeny Lebedev".to_string(),
                         },
                         Counter {
                             name: NonBlankString::from_str("Water").unwrap(),
+                            account_id: NonBlankString::from_str("568346545734").unwrap(),
                             email: Email::from_str("water@company2.com").unwrap(),
                             template: "custom-template.txt".to_string(),
                             signature: "Boris Britva".to_string(),
