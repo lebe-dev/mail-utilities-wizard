@@ -239,7 +239,7 @@
 					<button type="button" on:click={onSelectPreviousMonth}
 							class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
 					<button type="button" on:click={onSelectCurrentMonth}
-							class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active me-3' : 'btn btn-outline-primary me-3'}>{getCurrentMonth()}</button>
+							class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active rounded-end me-3' : 'btn btn-outline-primary rounded-end me-3'}>{getCurrentMonth()}</button>
 					<input id="period-value" type="month" bind:value={customPeriodValue}
 						   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-primary' : 'form-control'}
 						   on:change={onPeriodValueUpdate}>
