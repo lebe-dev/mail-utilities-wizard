@@ -34,6 +34,7 @@
 			currentLocation = new Location();
 			currentCounterName = data.config.page.selectCounterDropdown;
 			currentCounter = new Counter();
+			periodValue = getPreviousMonth();
 			pageLoading = false;
 
 		}).catch((e: any) => {
@@ -64,6 +65,7 @@
 					currentLocation = location;
 					currentCounterName = data.config.page.selectCounterDropdown;
 					currentCounter = new Counter();
+					periodValue = getPreviousMonth();
 					rerender();
 				}
 			}
@@ -110,6 +112,29 @@
 		}
 	}
 
+	function getPreviousMonth(): string {
+		let now = new Date();
+		now.setDate(0);
+		return getMonthName(now, data.config.page.locale)
+	}
+
+	function getCurrentMonth(): string {
+		let now = new Date();
+		return getMonthName(now, data.config.page.locale)
+	}
+
+	function getMonthName(date: Date, lang: string): string {
+		return date.toLocaleString(lang,{month:'long'});
+	}
+
+	function onSelectPreviousMonth() {
+		periodValue = getPreviousMonth();
+	}
+
+	function onSelectCurrentMonth() {
+		periodValue = getCurrentMonth();
+	}
+
 	function onCounterValueUpdate(e: any) {
 		let value = e.target?.value;
 
@@ -129,6 +154,7 @@
 		if (confirm(data.config.page.sendConfirmMsg)) {
 			console.log('location:', currentLocation);
 			console.log('counter:', currentCounter);
+			console.log('period:', periodValue);
 			console.log('value:', counterValue);
 		}
 	}
@@ -143,7 +169,7 @@
 	<meta name="description" content="Mail Utilities Wizard" />
 </svelte:head>
 
-<section class="bg-white container rounded pt-3 ps-4 pe-4 pb-4">
+<section class="bg-white container rounded mt-1 pt-3 ps-4 pe-4 pb-4">
 	{#if !pageLoading}
 	<h3 class="mb-3">{data.config.page.header}</h3>
 
@@ -180,6 +206,7 @@
 					{data.config.page.accountIdLabel}
 					<input id="account-id" value={currentCounter.accountId} disabled class="form-control"/>
 				</label>
+				<div class="form-text">{data.config.page.accountIdHint}</div>
 			</div>
 
 			<div class="mb-3">
@@ -189,13 +216,25 @@
 				</label>
 			</div>
 
-			<div class="mb-3">
+			<div class="d-none mb-3">
 				<label for="period-value">
 					{data.config.page.periodLabel}
 					<input id="period-value" type="month" bind:value={periodValue}
 						   on:change={onPeriodValueUpdate}
 						   class="form-control" required>
 				</label>
+			</div>
+
+			<div class="mb-3">
+				<div class="mb-3">{data.config.page.periodLabel} {periodValue}</div>
+
+				<div class="btn-group" role="group" aria-label="Select period">
+					<button type="button" on:click={onSelectPreviousMonth}
+							class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
+					<button type="button" on:click={onSelectCurrentMonth}
+							class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getCurrentMonth()}</button>
+					<button type="button" class="btn btn-outline-primary">{data.config.page.customPeriodLabel}</button>
+				</div>
 			</div>
 
 			{#if isPeriodSelected()}
@@ -224,3 +263,9 @@
 		<div>Unexpected application error</div>
 	{/if}
 </section>
+
+<style>
+	.btn {
+		min-width: 150px;
+	}
+</style>
