@@ -4,6 +4,8 @@ use serde::{Deserialize, Serialize};
 #[derive(PartialEq, Serialize, Deserialize, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct PageConfig {
+    pub locale: NonBlankString,
+
     pub title: NonBlankString,
     pub header: NonBlankString,
 
@@ -30,6 +32,9 @@ pub struct PageConfig {
 
     #[serde(alias = "period-label", alias = "periodLabel")]
     pub period_label: NonBlankString,
+
+    #[serde(alias = "custom-period-label", alias = "customPeriodLabel")]
+    pub custom_period_label: NonBlankString,
 
     #[serde(alias = "counter-value-label", alias = "counterValueLabel")]
     pub counter_value_label: NonBlankString,

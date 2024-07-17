@@ -18,6 +18,7 @@ defaults:
   signature: 'Evgeny Lebedev'
 
 page:
+  locale: 'en'
   title: 'Mail Utilities Wizard'
   header: 'Send utilities data'
   select-location-label: 'Select location:'
@@ -28,6 +29,7 @@ page:
   account-id-placeholder: '1234567'
   email-label: 'Data will be sent to e-mail:'
   period-label: 'Period:'
+  custom-period-label: 'Specify'
   counter-value-label: 'Counter value:'
   counter-default-value: '0'
   send-confirm-msg: 'Do you want to continue?'

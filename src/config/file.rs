@@ -116,6 +116,8 @@ mod tests {
                 signature: NonBlankString::from_str("Evgeny Lebedev").unwrap(),
             },
             page: PageConfig {
+                locale: NonBlankString::from_str("en").unwrap(),
+
                 title: NonBlankString::from_str("Mail Utilities Wizard").unwrap(),
                 header: NonBlankString::from_str("Send utilities data").unwrap(),
 
@@ -131,6 +133,7 @@ mod tests {
                 email_label: NonBlankString::from_str("Data will be sent to e-mail:").unwrap(),
 
                 period_label: NonBlankString::from_str("Period:").unwrap(),
+                custom_period_label: NonBlankString::from_str("Specify").unwrap(),
 
                 counter_value_label: NonBlankString::from_str("Counter value:").unwrap(),
                 counter_default_value: NonBlankString::from_str("0").unwrap(),

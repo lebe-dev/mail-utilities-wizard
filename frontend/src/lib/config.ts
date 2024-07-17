@@ -8,6 +8,8 @@ export class PageConfig {
     title: string = '';
     header: string = '';
 
+    locale: string = '';
+
     selectLocationLabel: string = '';
     selectLocationDropdown: string = '';
     selectCounterLabel: string = '';
@@ -16,6 +18,7 @@ export class PageConfig {
     accountIdPlaceholder: string = '';
     emailLabel: string = '';
     periodLabel: string = '';
+    customPeriodLabel: string = '';
     counterValueLabel: string = '';
     counterDefaultValue: string = '';
     sendConfirmMsg: string = '';
