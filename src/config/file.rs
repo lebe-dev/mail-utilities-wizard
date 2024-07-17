@@ -120,7 +120,10 @@ mod tests {
                 header: NonBlankString::from_str("Send utilities data").unwrap(),
 
                 select_location_text: NonBlankString::from_str("Select location:").unwrap(),
-                select_location_dropdown: NonBlankString::from_str("- Location -").unwrap(),
+                select_location_dropdown: NonBlankString::from_str("- Select -").unwrap(),
+
+                select_counter_text: NonBlankString::from_str("Select counter:").unwrap(),
+                select_counter_dropdown: NonBlankString::from_str("- Select -").unwrap(),
 
                 account_id_label: NonBlankString::from_str("Your account id:").unwrap(),
                 account_id_placeholder: NonBlankString::from_str("1234567").unwrap(),

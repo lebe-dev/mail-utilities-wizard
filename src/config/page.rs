@@ -13,6 +13,12 @@ pub struct PageConfig {
     #[serde(alias = "select-location-dropdown", alias = "selectLocationDropdown")]
     pub select_location_dropdown: NonBlankString,
 
+    #[serde(alias = "select-counter-text", alias = "sendCounterText")]
+    pub select_counter_text: NonBlankString,
+
+    #[serde(alias = "select-counter-dropdown", alias = "selectCounterDropdown")]
+    pub select_counter_dropdown: NonBlankString,
+
     #[serde(alias = "account-id-label", alias = "accountIdLabel")]
     pub account_id_label: NonBlankString,
 

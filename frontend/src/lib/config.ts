@@ -10,6 +10,8 @@ export class PageConfig {
 
     selectLocationText: string = '';
     selectLocationDropdown: string = '';
+    selectCounterText: string = '';
+    selectCounterDropdown: string = '';
     accountIdLabel: string = '';
     accountIdPlaceholder: string = '';
     emailLabel: string = '';
