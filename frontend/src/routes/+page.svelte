@@ -1,7 +1,8 @@
 <script lang="ts">
 	import type {PageData} from "./$types";
 	import {fetchAppConfig} from "$lib/api";
-	import {type AppConfig, Counter, Location} from "$lib/config";
+	import {AppConfig, Counter, Location} from "$lib/config";
+	import {onMount} from "svelte";
 
 	export let data: PageData;
 
@@ -10,7 +11,9 @@
 
 	let rerenderForm: boolean = false;
 
+	let currentLocationName: string = '';
 	let currentLocation: Location = new Location();
+	let currentCounterName: string = '';
 	let currentCounter: Counter = new Counter();
 
 	let periodValue: string = '';
@@ -18,57 +21,82 @@
 
 	let formValid: boolean = false;
 
-	fetchAppConfig().then((config: AppConfig) => {
-		console.log('config:', config);
-		data.config = config;
-		currentLocation = new Location();
-		currentLocation.name = data.config.page.selectLocationDropdown;
-		currentCounter = new Counter();
-		currentCounter.name = data.config.page.selectCounterDropdown;
-		pageLoading = false;
+	onMount(async () => {
+		loadConfig();
+	});
 
-	}).catch((e: any) => {
-		console.error('unable to get config:', e);
-		pageLoading = false;
-		unexpectedError = true;
-	})
+	function loadConfig() {
+		pageLoading = true;
+		fetchAppConfig().then((config: AppConfig) => {
+			console.log('config:', config);
+			data.config = config;
+			currentLocationName = data.config.page.selectLocationDropdown;
+			currentLocation = new Location();
+			currentCounterName = data.config.page.selectCounterDropdown;
+			currentCounter = new Counter();
+			pageLoading = false;
+
+		}).catch((e: any) => {
+			console.error('unable to get config:', e);
+			pageLoading = false;
+			unexpectedError = true;
+		})
+	}
 
 	function isLocationSelected(): boolean {
-		return currentLocation.name !== data.config.page.selectLocationDropdown;
+		return currentLocationName !== data.config.page.selectLocationDropdown;
 	}
 
 	function onSelectLocation(e: any) {
 		let value = e.target?.value;
 
 		if (value !== undefined) {
-			const location = data.config.locations.find((entity) => entity.name === value);
-
-			if (location !== undefined) {
-				console.log('location:', location.name);
-				currentLocation = location;
-				currentCounter = new Counter();
-				currentCounter.name = data.config.page.selectCounterDropdown;
+			if (value === data.config.page.selectLocationDropdown) {
+				loadConfig();
 				rerender();
+
+			} else {
+				const location: Location|undefined = data.config.locations.find((entity) => entity.name === value);
+
+				if (location !== undefined) {
+					console.log('location:', location.name);
+					currentLocationName = location.name;
+					currentLocation = location;
+					currentCounterName = data.config.page.selectCounterDropdown;
+					currentCounter = new Counter();
+					rerender();
+				}
 			}
 		}
 	}
 
 	function isCounterSelected(): boolean {
-		return currentCounter.name !== data.config.page.selectLocationDropdown;
+		return currentCounterName !== data.config.page.selectCounterDropdown;
 	}
 
 	function onSelectCounter(e: any) {
+		console.log('onSelectCounter', e);
 		let value = e.target?.value;
 
 		if (value !== undefined) {
-			const counter = currentLocation.counters.find((entity) => entity.name === value);
+			const counter: Counter|undefined = currentLocation.counters.find((entity) => entity.name === value);
 
 			if (counter !== undefined) {
 				console.log('counter:', counter.name);
 				currentCounter = counter;
-				rerender();
+				currentCounterName = counter.name;
+
+			} else {
+				currentCounter = new Counter();
+				currentCounterName = data.config.page.selectCounterDropdown;
 			}
+
+			rerender();
 		}
+	}
+
+	function isPeriodSelected(): boolean {
+		return periodValue.length > 0;
 	}
 
 	function onPeriodValueUpdate(e: any) {
@@ -78,6 +106,7 @@
 			periodValue = value;
 			console.log('period value:', periodValue);
 			isFormValid();
+			rerender();
 		}
 	}
 
@@ -92,7 +121,7 @@
 	}
 
 	function isFormValid() {
-		formValid = counterValue.length > 0 && counterValue != '0';
+		formValid = periodValue.length >0 && counterValue.length > 0 && counterValue != '0';
 		console.log('form valid:', formValid);
 	}
 
@@ -114,69 +143,78 @@
 	<meta name="description" content="Mail Utilities Wizard" />
 </svelte:head>
 
-<section class="p-3">
+<section class="bg-white container rounded pt-3 ps-4 pe-4 pb-4">
 	{#if !pageLoading}
-	<h1>{data.config.page.header}</h1>
-
+	<h3 class="mb-3">{data.config.page.header}</h3>
 
 	{#key rerenderForm}
 
-	<label for="select-location">
-		{data.config.page.selectLocationLabel}
-		<select id="select-location" bind:value={currentLocation.name} class="form-select" on:change={onSelectLocation}>
-			<option>{data.config.page.selectLocationDropdown}</option>
-			{#each data.config.locations as location}
-				<option value={location.name}>{location.name}</option>
-			{/each}
-		</select>
-	</label>
+	<div class="mb-3">
+		<label for="select-location">
+			{data.config.page.selectLocationLabel}
+			<select id="select-location" bind:value={currentLocationName}
+					class="form-select" on:change={onSelectLocation}>
+				<option value={data.config.page.selectLocationDropdown}>
+					{data.config.page.selectLocationDropdown}
+				</option>
+				{#each data.config.locations as location}
+					<option value={location.name}>{location.name}</option>
+				{/each}
+			</select>
+		</label>
+	</div>
 
 	{#if isLocationSelected()}
 		<div>{data.config.page.selectCounterLabel}</div>
-		<select class="form-select" bind:value={currentCounter.name} on:change={onSelectCounter}>
-			<option value={data.config.page.selectCounterDropdown}>{data.config.page.selectCounterDropdown}</option>
+		<select class="form-select mb-3 w-auto" bind:value={currentCounterName} on:change={onSelectCounter}>
+			<option selected={!isCounterSelected()}
+					value={data.config.page.selectCounterDropdown}>{data.config.page.selectCounterDropdown}</option>
 			{#each currentLocation.counters as counter}
 				<option value={counter.name}>{counter.name}</option>
 			{/each}
 		</select>
 
 		{#if isCounterSelected()}
-			<div class="form-group">
+			<div class="form-group mb-3">
 				<label for="account-id">
 					{data.config.page.accountIdLabel}
 					<input id="account-id" value={currentCounter.accountId} disabled class="form-control"/>
 				</label>
 			</div>
 
-			<div class="form-group">
+			<div class="mb-3">
 				<label for="email">
 					{data.config.page.emailLabel}
 					<input id="email" value={currentCounter.email} disabled class="form-control"/>
 				</label>
 			</div>
 
-			<div class="form-group">
+			<div class="mb-3">
 				<label for="period-value">
 					{data.config.page.periodLabel}
-					<input id="period-value" type="month" bind:value={periodValue} on:keyup={onPeriodValueUpdate}
+					<input id="period-value" type="month" bind:value={periodValue}
+						   on:change={onPeriodValueUpdate}
 						   class="form-control" required>
 				</label>
 			</div>
 
-			<div class="form-group">
-				<label for="counter-value">
-					{data.config.page.counterValueLabel}
-					<input id="counter-value" type="number" bind:value={counterValue} on:keyup={onCounterValueUpdate}
-						   class="form-control" required>
-				</label>
-			</div>
+			{#if isPeriodSelected()}
+				<div class="mb-3">
+					<label for="counter-value">
+						{data.config.page.counterValueLabel}
+						<input id="counter-value" type="text"
+							   bind:value={counterValue} on:keyup={onCounterValueUpdate}
+							   class="form-control" required>
+					</label>
+				</div>
 
-			<hr>
+				<hr>
 
-			<div>
-				<input class="btn btn-primary" type="button" on:click={onSend}
-					   value={data.config.page.sendButton} disabled={!formValid}>
-			</div>
+				<div>
+					<input class="btn btn-primary" type="button" on:click={onSend}
+						   value={data.config.page.sendButton} disabled={!formValid}>
+				</div>
+			{/if}
 		{/if}
 	{/if}
 
@@ -186,6 +224,3 @@
 		<div>Unexpected application error</div>
 	{/if}
 </section>
-
-<style>
-</style>
