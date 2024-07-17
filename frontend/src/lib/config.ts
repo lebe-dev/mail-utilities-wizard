@@ -8,13 +8,15 @@ export class PageConfig {
     title: string = '';
     header: string = '';
 
-    selectLocationText: string = '';
+    selectLocationLabel: string = '';
     selectLocationDropdown: string = '';
-    selectCounterText: string = '';
+    selectCounterLabel: string = '';
     selectCounterDropdown: string = '';
     accountIdLabel: string = '';
     accountIdPlaceholder: string = '';
     emailLabel: string = '';
+    counterValueLabel: string = '';
+    counterDefaultValue: string = '';
     sendConfirmMsg: string = '';
     sendConfirmYes: string = '';
     sendConfirmNo: string = '';

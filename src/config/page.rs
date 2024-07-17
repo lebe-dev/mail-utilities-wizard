@@ -7,14 +7,14 @@ pub struct PageConfig {
     pub title: NonBlankString,
     pub header: NonBlankString,
 
-    #[serde(alias = "select-location-text", alias = "sendLocationText")]
-    pub select_location_text: NonBlankString,
+    #[serde(alias = "select-location-label", alias = "sendLocationLabel")]
+    pub select_location_label: NonBlankString,
 
     #[serde(alias = "select-location-dropdown", alias = "selectLocationDropdown")]
     pub select_location_dropdown: NonBlankString,
 
-    #[serde(alias = "select-counter-text", alias = "sendCounterText")]
-    pub select_counter_text: NonBlankString,
+    #[serde(alias = "select-counter-label", alias = "sendCounterLabel")]
+    pub select_counter_label: NonBlankString,
 
     #[serde(alias = "select-counter-dropdown", alias = "selectCounterDropdown")]
     pub select_counter_dropdown: NonBlankString,
@@ -27,6 +27,12 @@ pub struct PageConfig {
 
     #[serde(alias = "email-label", alias = "emailLabel")]
     pub email_label: NonBlankString,
+
+    #[serde(alias = "counter-value-label", alias = "counterValueLabel")]
+    pub counter_value_label: NonBlankString,
+
+    #[serde(alias = "counter-default-value", alias = "counterDefaultValue")]
+    pub counter_default_value: NonBlankString,
 
     #[serde(alias = "send-confirm-msg", alias = "sendConfirmMsg")]
     pub send_confirm_msg: NonBlankString,

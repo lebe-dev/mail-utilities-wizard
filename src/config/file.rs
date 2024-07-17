@@ -119,16 +119,19 @@ mod tests {
                 title: NonBlankString::from_str("Mail Utilities Wizard").unwrap(),
                 header: NonBlankString::from_str("Send utilities data").unwrap(),
 
-                select_location_text: NonBlankString::from_str("Select location:").unwrap(),
+                select_location_label: NonBlankString::from_str("Select location:").unwrap(),
                 select_location_dropdown: NonBlankString::from_str("- Select -").unwrap(),
 
-                select_counter_text: NonBlankString::from_str("Select counter:").unwrap(),
+                select_counter_label: NonBlankString::from_str("Select counter:").unwrap(),
                 select_counter_dropdown: NonBlankString::from_str("- Select -").unwrap(),
 
                 account_id_label: NonBlankString::from_str("Your account id:").unwrap(),
                 account_id_placeholder: NonBlankString::from_str("1234567").unwrap(),
 
                 email_label: NonBlankString::from_str("Data will be sent to e-mail:").unwrap(),
+
+                counter_value_label: NonBlankString::from_str("Counter value:").unwrap(),
+                counter_default_value: NonBlankString::from_str("0").unwrap(),
 
                 send_confirm_msg: NonBlankString::from_str("Do you want to continue?").unwrap(),
                 send_confirm_yes: NonBlankString::from_str("Yes").unwrap(),
