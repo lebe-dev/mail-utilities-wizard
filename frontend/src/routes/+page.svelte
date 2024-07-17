@@ -17,6 +17,7 @@
 	let currentCounter: Counter = new Counter();
 
 	let periodValue: string = '';
+	let customPeriodValue: string = '';
 	let counterValue: string = '';
 
 	let formValid: boolean = false;
@@ -34,6 +35,10 @@
 			currentLocation = new Location();
 			currentCounterName = data.config.page.selectCounterDropdown;
 			currentCounter = new Counter();
+			const now = new Date();
+			now.setDate(0);
+			customPeriodValue = `${now.getFullYear()}-${now.getUTCMonth() + 1}`;
+
 			periodValue = getPreviousMonth();
 			pageLoading = false;
 
@@ -105,21 +110,32 @@
 		let value = e.target?.value;
 
 		if (value !== undefined) {
-			periodValue = value;
-			console.log('period value:', periodValue);
+			customPeriodValue = value;
+			const [year, month] = value.split('-');
+
+			const date = new Date(year, month - 1);
+
+			customPeriodValue = `${date.getFullYear()}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}`;
+			console.log('custom period value', customPeriodValue);
+
+			periodValue = getMonthName(date, data.config.page.locale);
+			console.log('period value:', customPeriodValue);
 			isFormValid();
-			rerender();
 		}
 	}
 
 	function getPreviousMonth(): string {
 		let now = new Date();
 		now.setDate(0);
+		const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
+		customPeriodValue = `${now.getFullYear()}-${month}`;
 		return getMonthName(now, data.config.page.locale)
 	}
 
 	function getCurrentMonth(): string {
 		let now = new Date();
+		const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
+		customPeriodValue = `${now.getFullYear()}-${month}`;
 		return getMonthName(now, data.config.page.locale)
 	}
 
@@ -216,15 +232,6 @@
 				</label>
 			</div>
 
-			<div class="d-none mb-3">
-				<label for="period-value">
-					{data.config.page.periodLabel}
-					<input id="period-value" type="month" bind:value={periodValue}
-						   on:change={onPeriodValueUpdate}
-						   class="form-control" required>
-				</label>
-			</div>
-
 			<div class="mb-3">
 				<div class="mb-3">{data.config.page.periodLabel} {periodValue}</div>
 
@@ -232,8 +239,10 @@
 					<button type="button" on:click={onSelectPreviousMonth}
 							class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
 					<button type="button" on:click={onSelectCurrentMonth}
-							class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getCurrentMonth()}</button>
-					<button type="button" class="btn btn-outline-primary">{data.config.page.customPeriodLabel}</button>
+							class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active me-3' : 'btn btn-outline-primary me-3'}>{getCurrentMonth()}</button>
+					<input id="period-value" type="month" bind:value={customPeriodValue}
+						   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-primary' : 'form-control'}
+						   on:change={onPeriodValueUpdate}>
 				</div>
 			</div>
 
