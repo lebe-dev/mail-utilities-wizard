@@ -130,6 +130,8 @@ mod tests {
 
                 email_label: NonBlankString::from_str("Data will be sent to e-mail:").unwrap(),
 
+                period_label: NonBlankString::from_str("Period:").unwrap(),
+
                 counter_value_label: NonBlankString::from_str("Counter value:").unwrap(),
                 counter_default_value: NonBlankString::from_str("0").unwrap(),
 

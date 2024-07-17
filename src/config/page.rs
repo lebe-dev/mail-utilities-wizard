@@ -28,6 +28,9 @@ pub struct PageConfig {
     #[serde(alias = "email-label", alias = "emailLabel")]
     pub email_label: NonBlankString,
 
+    #[serde(alias = "period-label", alias = "periodLabel")]
+    pub period_label: NonBlankString,
+
     #[serde(alias = "counter-value-label", alias = "counterValueLabel")]
     pub counter_value_label: NonBlankString,
 

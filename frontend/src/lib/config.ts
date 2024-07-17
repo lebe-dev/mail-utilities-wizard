@@ -15,6 +15,7 @@ export class PageConfig {
     accountIdLabel: string = '';
     accountIdPlaceholder: string = '';
     emailLabel: string = '';
+    periodLabel: string = '';
     counterValueLabel: string = '';
     counterDefaultValue: string = '';
     sendConfirmMsg: string = '';
