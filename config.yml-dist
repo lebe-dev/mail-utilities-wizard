@@ -26,7 +26,7 @@ page:
   select-counter-label: 'Select counter:'
   select-counter-dropdown: '- Select -'
   account-id-label: 'Your account id:'
-  account-id-placeholder: '1234567'
+  account-id-hint: 'Unique for each counter'
   email-label: 'Data will be sent to e-mail:'
   period-label: 'Period:'
   custom-period-label: 'Specify'

@@ -24,8 +24,8 @@ pub struct PageConfig {
     #[serde(alias = "account-id-label", alias = "accountIdLabel")]
     pub account_id_label: NonBlankString,
 
-    #[serde(alias = "account-id-placeholder", alias = "accountIdPlaceholder")]
-    pub account_id_placeholder: NonBlankString,
+    #[serde(alias = "account-id-hint", alias = "accountIdHint")]
+    pub account_id_hint: NonBlankString,
 
     #[serde(alias = "email-label", alias = "emailLabel")]
     pub email_label: NonBlankString,

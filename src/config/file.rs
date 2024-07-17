@@ -128,7 +128,7 @@ mod tests {
                 select_counter_dropdown: NonBlankString::from_str("- Select -").unwrap(),
 
                 account_id_label: NonBlankString::from_str("Your account id:").unwrap(),
-                account_id_placeholder: NonBlankString::from_str("1234567").unwrap(),
+                account_id_hint: NonBlankString::from_str("Unique for each counter").unwrap(),
 
                 email_label: NonBlankString::from_str("Data will be sent to e-mail:").unwrap(),
 

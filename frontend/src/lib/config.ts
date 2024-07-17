@@ -15,7 +15,7 @@ export class PageConfig {
     selectCounterLabel: string = '';
     selectCounterDropdown: string = '';
     accountIdLabel: string = '';
-    accountIdPlaceholder: string = '';
+    accountIdHint: string = '';
     emailLabel: string = '';
     periodLabel: string = '';
     customPeriodLabel: string = '';
