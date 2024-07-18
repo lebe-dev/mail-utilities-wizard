@@ -1,4 +1,8 @@
+use std::str::FromStr;
+
+use anyhow::Context;
 use config::Config;
+use email_type_rs::email::Email;
 use log::info;
 
 use crate::config::AppConfig;
@@ -20,8 +24,16 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
         let mut counters: Vec<Counter> = vec![];
 
         for counter in location.counters {
+            let mut email_copy = counter.email_copy.clone();
             let mut template = counter.template.clone();
             let mut signature = counter.signature.clone();
+
+            if counter.email_copy.is_empty() {
+                email_copy = loaded_config.defaults.email_copy.to_string();
+
+            } else {
+                Email::from_str(&counter.email_copy).context("invalid email-copy value in counter configuration")?;
+            }
 
             if counter.template.is_empty() {
                 template = loaded_config.defaults.template.to_string();
@@ -36,6 +48,7 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
                     name: counter.name,
                     account_id: counter.account_id,
                     email: counter.email,
+                    email_copy,
                     template,
                     signature,
                 }
@@ -98,6 +111,7 @@ mod tests {
                             name: NonBlankString::from_str("Electricity").unwrap(),
                             account_id: NonBlankString::from_str("85678463456").unwrap(),
                             email: Email::from_str("electricity@company1.com").unwrap(),
+                            email_copy: "default@mail.com".to_string(),
                             template: "example.txt".to_string(),
                             signature: "Evgeny Lebedev".to_string(),
                         },
@@ -105,6 +119,7 @@ mod tests {
                             name: NonBlankString::from_str("Water").unwrap(),
                             account_id: NonBlankString::from_str("568346545734").unwrap(),
                             email: Email::from_str("water@company2.com").unwrap(),
+                            email_copy: "relative@mail.com".to_string(),
                             template: "custom-template.txt".to_string(),
                             signature: "Boris Britva".to_string(),
                         }
@@ -112,6 +127,7 @@ mod tests {
                 }
             ],
             defaults: DefaultsConfig {
+                email_copy: Email::from_str("default@mail.com").unwrap(),
                 template: NonBlankString::from_str("example.txt").unwrap(),
                 signature: NonBlankString::from_str("Evgeny Lebedev").unwrap(),
             },

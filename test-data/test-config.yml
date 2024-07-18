@@ -12,10 +12,12 @@ locations:
     - name: 'Water'
       account-id: '568346545734'
       email: 'water@company2.com'
+      email-copy: 'relative@mail.com'
       template: 'custom-template.txt'
       signature: 'Boris Britva'
 
 defaults:
+  email-copy: 'default@mail.com'
   template: 'example.txt'
   signature: 'Evgeny Lebedev'
 

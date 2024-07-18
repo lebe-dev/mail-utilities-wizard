@@ -67,6 +67,7 @@ mod tests {
             name: NonBlankString::from_str("Electricity").unwrap(),
             account_id: NonBlankString::from_str("92358457293485").unwrap(),
             email: Email::from_str("whatever@company.com").unwrap(),
+            email_copy: "".to_string(),
             template: "whatever".to_string(),
             signature: "Evgeny Lebedev".to_string(),
         };

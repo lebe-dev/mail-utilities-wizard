@@ -9,11 +9,15 @@ locations:
       account-id: '1234567890'
       email: 'utilities@company.com'
       # You can override default template name
+      #email-copy: 'utilities@company.ru'
+      # You can override default template name
       #template: 'custom-template.txt'
       # You can override default signature
       #signature: 'Boris Britva'
 
 defaults:
+  # Send me a copy
+  email-copy: 'me@mail.com'
   template: 'example.txt'
   signature: 'Evgeny Lebedev'
 
