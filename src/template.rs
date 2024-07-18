@@ -68,7 +68,8 @@ mod tests {
             account_id: NonBlankString::from_str("92358457293485").unwrap(),
             email: Email::from_str("whatever@company.com").unwrap(),
             email_copy: "".to_string(),
-            template: "whatever".to_string(),
+            mail_subject_template: "whatever".to_string(),
+            mail_body_template_file: "whatever".to_string(),
             signature: "Evgeny Lebedev".to_string(),
         };
 

@@ -8,16 +8,22 @@ locations:
     - name: 'Electricity'
       account-id: '1234567890'
       email: 'utilities@company.com'
-      # You can override default template name
+      # You can override default email-copy value
       #email-copy: 'utilities@company.ru'
-      # You can override default template name
-      #template: 'custom-template.txt'
+
+      # You can override default subject template
+      #mail-subject-template: 'Counter {{ counter_name }} data for {{ month }}'
+
+      # You can override default template file name
+      #mail-body-template-file: 'custom-template.txt'
+
       # You can override default signature
       #signature: 'Boris Britva'
 
 defaults:
   email-copy: 'me@mail.com'
-  template: 'example.txt'
+  mail-subject-template: 'Counter {{ counter_name }} data for {{ month }}'
+  mail-body-template-file: 'example.txt'
   signature: 'Evgeny Lebedev'
 
 page:

@@ -25,7 +25,8 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
 
         for counter in location.counters {
             let mut email_copy = counter.email_copy.clone();
-            let mut template = counter.template.clone();
+            let mut mail_subject_template = counter.mail_subject_template.clone();
+            let mut mail_body_template_file = counter.mail_body_template_file.clone();
             let mut signature = counter.signature.clone();
 
             if counter.email_copy.is_empty() {
@@ -35,8 +36,12 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
                 Email::from_str(&counter.email_copy).context("invalid email-copy value in counter configuration")?;
             }
 
-            if counter.template.is_empty() {
-                template = loaded_config.defaults.template.to_string();
+            if counter.mail_subject_template.is_empty() {
+                mail_subject_template = loaded_config.defaults.mail_subject_template.to_string();
+            }
+
+            if counter.mail_body_template_file.is_empty() {
+                mail_body_template_file = loaded_config.defaults.mail_body_template_file.to_string();
             }
 
             if counter.signature.is_empty() {
@@ -49,7 +54,8 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
                     account_id: counter.account_id,
                     email: counter.email,
                     email_copy,
-                    template,
+                    mail_subject_template,
+                    mail_body_template_file,
                     signature,
                 }
             )
@@ -112,7 +118,8 @@ mod tests {
                             account_id: NonBlankString::from_str("85678463456").unwrap(),
                             email: Email::from_str("electricity@company1.com").unwrap(),
                             email_copy: "default@mail.com".to_string(),
-                            template: "example.txt".to_string(),
+                            mail_subject_template: "Counter {{ counter_name }} data for {{ month }}".to_string(),
+                            mail_body_template_file: "example.txt".to_string(),
                             signature: "Evgeny Lebedev".to_string(),
                         },
                         Counter {
@@ -120,7 +127,8 @@ mod tests {
                             account_id: NonBlankString::from_str("568346545734").unwrap(),
                             email: Email::from_str("water@company2.com").unwrap(),
                             email_copy: "relative@mail.com".to_string(),
-                            template: "custom-template.txt".to_string(),
+                            mail_subject_template: "Counter {{ counter_name }} data for {{ month }} 2".to_string(),
+                            mail_body_template_file: "custom-template.txt".to_string(),
                             signature: "Boris Britva".to_string(),
                         }
                     ]
@@ -128,7 +136,8 @@ mod tests {
             ],
             defaults: DefaultsConfig {
                 email_copy: Email::from_str("default@mail.com").unwrap(),
-                template: NonBlankString::from_str("example.txt").unwrap(),
+                mail_subject_template: NonBlankString::from_str("Counter {{ counter_name }} data for {{ month }}").unwrap(),
+                mail_body_template_file: NonBlankString::from_str("example.txt").unwrap(),
                 signature: NonBlankString::from_str("Evgeny Lebedev").unwrap(),
             },
             page: PageConfig {

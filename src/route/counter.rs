@@ -30,7 +30,7 @@ pub async fn send_counter_data_route(State(state): State<Arc<AppState>>,
                         &location.name, &request.month, &counter, &request.counter_value
                     );
 
-                    let template_file = Path::new("templates").join(&counter.template);
+                    let template_file = Path::new("templates").join(&counter.mail_body_template_file);
                     let template_file = format!("{}", template_file.display());
 
                     match render_mail_template(&template_file, &template_vars) {

@@ -13,12 +13,14 @@ locations:
       account-id: '568346545734'
       email: 'water@company2.com'
       email-copy: 'relative@mail.com'
-      template: 'custom-template.txt'
+      mail-subject-template: 'Counter {{ counter_name }} data for {{ month }} 2'
+      mail-body-template-file: 'custom-template.txt'
       signature: 'Boris Britva'
 
 defaults:
   email-copy: 'default@mail.com'
-  template: 'example.txt'
+  mail-subject-template: 'Counter {{ counter_name }} data for {{ month }}'
+  mail-body-template-file: 'example.txt'
   signature: 'Evgeny Lebedev'
 
 page:

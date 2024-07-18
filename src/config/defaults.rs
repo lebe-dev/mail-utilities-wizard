@@ -6,6 +6,7 @@ use serde::Deserialize;
 #[serde(rename_all = "kebab-case")]
 pub struct DefaultsConfig {
     pub email_copy: Email,
-    pub template: NonBlankString,
+    pub mail_subject_template: NonBlankString,
+    pub mail_body_template_file: NonBlankString,
     pub signature: NonBlankString
 }
