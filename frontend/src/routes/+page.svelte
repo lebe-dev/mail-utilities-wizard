@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type {PageData} from "./$types";
-	import {fetchAppConfig, fetchMailTemplate} from "$lib/api";
+	import {fetchAppConfig, fetchMailTemplate, sendCounterData} from "$lib/api";
 	import {AppConfig, Counter, Location} from "$lib/config";
 	import {onMount} from "svelte";
 
@@ -191,18 +191,22 @@
 
 			counterDataSending = true;
 
-			// sendCounterData(currentLocationName, currentCounterName,
-			// 		periodValue, counterValue).then(() => {
-			//
-			// 	showSuccessMessage = true;
-			// 	showErrorMessage = false;
-			//
-			// }).catch((e) => {
-			// 	console.error(e);
-			//
-			// 	showSuccessMessage = false;
-			// 	showErrorMessage = true;
-			// })
+			sendCounterData(currentLocationName, currentCounterName,
+					periodValue, counterValue).then(() => {
+
+				showSuccessMessage = true;
+				showErrorMessage = false;
+				counterDataSending = false;
+
+				location.href='/success';
+
+			}).catch((e) => {
+				console.error(e);
+
+				showSuccessMessage = false;
+				showErrorMessage = true;
+				counterDataSending = false;
+			})
 		}
 	}
 
