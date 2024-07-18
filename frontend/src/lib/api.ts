@@ -13,8 +13,27 @@ export async function fetchAppConfig(): Promise<AppConfig> {
     }
 }
 
+export async function fetchMailTemplate(locationName: string, counterName: string, month: string, counterValue: string): Promise<MailTemplateResponse> {
+    const counterData = new CounterData(locationName, counterName, month, counterValue);
+
+    const response = await fetch('/api/mail/template', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(counterData)
+    });
+
+    if (response.status === 200) {
+        return response.json()
+
+    } else {
+        throw new Error('mail template fetch error')
+    }
+}
+
 export async function sendCounterData(locationName: string, counterName: string, month: string, counterValue: string): Promise<AppConfig> {
-    const report = new ReportCounterData(locationName, counterName, month, counterValue);
+    const report = new CounterData(locationName, counterName, month, counterValue);
 
     const response = await fetch('/api/counter', {
         method: 'POST',
@@ -32,7 +51,11 @@ export async function sendCounterData(locationName: string, counterName: string,
     }
 }
 
-export class ReportCounterData {
+export class MailTemplateResponse {
+    template: string = '';
+}
+
+export class CounterData {
     constructor(locationName: string, counterName: string, month: string, counterValue: string) {
         this.locationName = locationName;
         this.counterName = counterName;

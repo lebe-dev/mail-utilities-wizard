@@ -133,16 +133,18 @@ mod tests {
                 email_label: NonBlankString::from_str("Data will be sent to e-mail:").unwrap(),
 
                 period_label: NonBlankString::from_str("Period:").unwrap(),
-                custom_period_label: NonBlankString::from_str("Specify").unwrap(),
 
                 counter_value_label: NonBlankString::from_str("Counter value:").unwrap(),
-                counter_default_value: NonBlankString::from_str("0").unwrap(),
+
+                mail_template_title: NonBlankString::from_str("Letter").unwrap(),
+                mail_template_to_label: NonBlankString::from_str("To:").unwrap(),
+                mail_template_body_label: NonBlankString::from_str("Body:").unwrap(),
+                mail_template_close_button: NonBlankString::from_str("Close").unwrap(),
 
                 send_confirm_msg: NonBlankString::from_str("Do you want to continue?").unwrap(),
-                send_confirm_yes: NonBlankString::from_str("Yes").unwrap(),
-                send_confirm_no: NonBlankString::from_str("No").unwrap(),
 
                 send_button: NonBlankString::from_str("Send").unwrap(),
+                show_letter_button: NonBlankString::from_str("Show the letter").unwrap(),
                 send_more_button: NonBlankString::from_str("Send more").unwrap(),
 
                 app_error_msg: NonBlankString::from_str("Application error").unwrap(),

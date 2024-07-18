@@ -12,20 +12,31 @@ export class PageConfig {
 
     selectLocationLabel: string = '';
     selectLocationDropdown: string = '';
+
     selectCounterLabel: string = '';
     selectCounterDropdown: string = '';
+
     accountIdLabel: string = '';
     accountIdHint: string = '';
+
     emailLabel: string = '';
+
     periodLabel: string = '';
-    customPeriodLabel: string = '';
+
     counterValueLabel: string = '';
-    counterDefaultValue: string = '';
+
+    mailTemplateTitle: string = '';
+    mailTemplateToLabel: string = '';
+    mailTemplateBodyLabel: string = '';
+    mailTemplateCloseButton: string = '';
+
     sendConfirmMsg: string = '';
-    sendConfirmYes: string = '';
-    sendConfirmNo: string = '';
     sendButton: string = '';
+
+    showLetterButton: string = '';
+
     sendMoreButton: string = '';
+
     appErrorMsg: string = '';
     sendingMsg: string = '';
     sendSuccessMsg: string = '';

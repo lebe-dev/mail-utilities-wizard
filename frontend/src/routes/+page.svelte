@@ -1,13 +1,18 @@
 <script lang="ts">
 	import type {PageData} from "./$types";
-	import {fetchAppConfig} from "$lib/api";
+	import {fetchAppConfig, fetchMailTemplate} from "$lib/api";
 	import {AppConfig, Counter, Location} from "$lib/config";
 	import {onMount} from "svelte";
 
 	export let data: PageData;
 
 	let pageLoading = true;
+	let showMailTemplate = true;
+	let counterDataSending = false;
 	let unexpectedError = false;
+
+	let showSuccessMessage = false;
+	let showErrorMessage = false;
 
 	let rerenderForm: boolean = false;
 
@@ -19,6 +24,8 @@
 	let periodValue: string = '';
 	let customPeriodValue: string = '';
 	let counterValue: string = '';
+
+	let mailTemplate: string = '';
 
 	let formValid: boolean = false;
 
@@ -166,12 +173,36 @@
 		console.log('form valid:', formValid);
 	}
 
+	function onShowMailTemplate() {
+		fetchMailTemplate(currentLocationName, currentCounterName, periodValue, counterValue).then((template) => {
+			mailTemplate = template.template
+
+		}).catch((e) => {
+			console.error(e);
+		})
+	}
+
 	function onSend() {
 		if (confirm(data.config.page.sendConfirmMsg)) {
 			console.log('location:', currentLocation);
 			console.log('counter:', currentCounter);
 			console.log('period:', periodValue);
 			console.log('value:', counterValue);
+
+			counterDataSending = true;
+
+			// sendCounterData(currentLocationName, currentCounterName,
+			// 		periodValue, counterValue).then(() => {
+			//
+			// 	showSuccessMessage = true;
+			// 	showErrorMessage = false;
+			//
+			// }).catch((e) => {
+			// 	console.error(e);
+			//
+			// 	showSuccessMessage = false;
+			// 	showErrorMessage = true;
+			// })
 		}
 	}
 
@@ -187,84 +218,139 @@
 
 <section class="bg-white container rounded mt-1 pt-3 ps-4 pe-4 pb-4">
 	{#if !pageLoading}
-	<h3 class="mb-3">{data.config.page.header}</h3>
-
-	{#key rerenderForm}
-
-	<div class="mb-3">
-		<label for="select-location">
-			{data.config.page.selectLocationLabel}
-			<select id="select-location" bind:value={currentLocationName}
-					class="form-select" on:change={onSelectLocation}>
-				<option value={data.config.page.selectLocationDropdown}>
-					{data.config.page.selectLocationDropdown}
-				</option>
-				{#each data.config.locations as location}
-					<option value={location.name}>{location.name}</option>
-				{/each}
-			</select>
-		</label>
-	</div>
-
-	{#if isLocationSelected()}
-		<div>{data.config.page.selectCounterLabel}</div>
-		<select class="form-select mb-3 w-auto" bind:value={currentCounterName} on:change={onSelectCounter}>
-			<option selected={!isCounterSelected()}
-					value={data.config.page.selectCounterDropdown}>{data.config.page.selectCounterDropdown}</option>
-			{#each currentLocation.counters as counter}
-				<option value={counter.name}>{counter.name}</option>
-			{/each}
-		</select>
-
-		{#if isCounterSelected()}
-			<div class="form-group mb-3">
-				<label for="account-id">
-					{data.config.page.accountIdLabel}
-					<input id="account-id" value={currentCounter.accountId} disabled class="form-control"/>
-				</label>
-				<div class="form-text">{data.config.page.accountIdHint}</div>
-			</div>
-
-			<div class="mb-3">
-				<label for="email">
-					{data.config.page.emailLabel}
-					<input id="email" value={currentCounter.email} disabled class="form-control"/>
-				</label>
-			</div>
-
-			<div class="mb-3">
-				<div class="mb-3">{data.config.page.periodLabel} {periodValue}</div>
-
-				<div class="btn-group" role="group" aria-label="Select period">
-					<button type="button" on:click={onSelectPreviousMonth}
-							class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
-					<button type="button" on:click={onSelectCurrentMonth}
-							class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active rounded-end me-3' : 'btn btn-outline-primary rounded-end me-3'}>{getCurrentMonth()}</button>
-					<input id="period-value" type="month" bind:value={customPeriodValue}
-						   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-primary' : 'form-control'}
-						   on:change={onPeriodValueUpdate}>
+		<!-- MODAL -->
+		<div id="mailTemplateModal" class="modal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">{data.config.page.mailTemplateTitle}</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p><strong>{data.config.page.mailTemplateToLabel}</strong> {currentCounter.email}</p>
+						<p><strong>{data.config.page.mailTemplateBodyLabel}</strong></p>
+						<p style="white-space: pre-line;">{mailTemplate}</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">{data.config.page.mailTemplateCloseButton}</button>
+					</div>
 				</div>
 			</div>
+		</div>
+		<!-- /MODAL -->
 
-			{#if isPeriodSelected()}
+		<h3 class="mb-3">{data.config.page.header}</h3>
+
+		{#key rerenderForm}
+
+		<div class="mb-3">
+			<label for="select-location">
+				{data.config.page.selectLocationLabel}
+				<select id="select-location" bind:value={currentLocationName}
+						class="form-select" on:change={onSelectLocation} disabled={counterDataSending}>
+					<option value={data.config.page.selectLocationDropdown}>
+						{data.config.page.selectLocationDropdown}
+					</option>
+					{#each data.config.locations as location}
+						<option value={location.name}>{location.name}</option>
+					{/each}
+				</select>
+			</label>
+		</div>
+
+		{#if isLocationSelected()}
+			<div>{data.config.page.selectCounterLabel}</div>
+			<select class="form-select mb-3 w-auto" bind:value={currentCounterName}
+					on:change={onSelectCounter} disabled={counterDataSending}>
+				<option selected={!isCounterSelected()}
+						value={data.config.page.selectCounterDropdown}>{data.config.page.selectCounterDropdown}</option>
+				{#each currentLocation.counters as counter}
+					<option value={counter.name}>{counter.name}</option>
+				{/each}
+			</select>
+
+			{#if isCounterSelected()}
+				<div class="form-group mb-3">
+					<label for="account-id">
+						{data.config.page.accountIdLabel}
+						<input id="account-id" value={currentCounter.accountId} disabled class="form-control"/>
+					</label>
+					<div class="form-text">{data.config.page.accountIdHint}</div>
+				</div>
+
 				<div class="mb-3">
-					<label for="counter-value">
-						{data.config.page.counterValueLabel}
-						<input id="counter-value" type="text"
-							   bind:value={counterValue} on:keyup={onCounterValueUpdate}
-							   class="form-control" required>
+					<label for="email">
+						{data.config.page.emailLabel}
+						<input id="email" value={currentCounter.email} disabled class="form-control"/>
 					</label>
 				</div>
 
-				<hr>
+				<div class="mb-3">
+					<div class="mb-3">{data.config.page.periodLabel} {periodValue}</div>
 
-				<div>
-					<input class="btn btn-primary" type="button" on:click={onSend}
-						   value={data.config.page.sendButton} disabled={!formValid}>
+					<div class="btn-group" role="group" aria-label="Select period">
+						<button type="button" on:click={onSelectPreviousMonth} disabled={counterDataSending}
+								class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
+						<button type="button" on:click={onSelectCurrentMonth} disabled={counterDataSending}
+								class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active rounded-end me-3' : 'btn btn-outline-primary rounded-end me-3'}>{getCurrentMonth()}</button>
+						<input id="period-value" type="month" bind:value={customPeriodValue} disabled={counterDataSending}
+							   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-primary' : 'form-control'}
+							   on:change={onPeriodValueUpdate}>
+					</div>
 				</div>
+
+				{#if isPeriodSelected()}
+					<div class="mb-3">
+						<label for="counter-value">
+							{data.config.page.counterValueLabel}
+							<input id="counter-value" type="text"
+								   bind:value={counterValue} on:keyup={onCounterValueUpdate}
+								   disabled={counterDataSending}
+								   class="form-control" required>
+						</label>
+					</div>
+
+					<hr>
+
+					<div>
+						{#if !counterDataSending}
+						<button class="btn btn-primary me-3" type="button" on:click={onSend}
+								disabled={!formValid}>{data.config.page.sendButton}</button>
+
+						<button type="button" class="btn btn-light" data-bs-toggle="modal"
+								on:click={onShowMailTemplate} disabled={!formValid}
+								data-bs-target="#mailTemplateModal">
+							{data.config.page.showLetterButton}
+						</button>
+						{/if}
+
+						{#if counterDataSending}
+						<div class="mt-3 mb-3">
+							<div role="status" class="mb-3">{data.config.page.sendingMsg}</div>
+							<div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+								<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+							</div>
+						</div>
+						{/if}
+						{#if showSuccessMessage}
+							<div class="mt-3">
+								<div class="alert alert-primary" role="alert">
+									{data.config.page.sendSuccessMsg}
+								</div>
+							</div>
+						{/if}
+						{#if showErrorMessage}
+							<div class="mt-3">
+								<div class="alert alert-danger" role="alert">
+								{data.config.page.sendErrorMsg}
+							</div>
+						</div>
+						{/if}
+					</div>
+				{/if}
 			{/if}
 		{/if}
-	{/if}
 
 	{/key}
 

@@ -1,6 +1,8 @@
 Hello,
 
-This is electricity counter for location {{ location }} for {{ month }}.
+My account id {{ account_id }}.
+
+This is {{ counter_name }} counter for location {{ location }} for {{ month }}.
 
 Value is {{ counter_value }}.
 

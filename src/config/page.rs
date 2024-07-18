@@ -33,26 +33,29 @@ pub struct PageConfig {
     #[serde(alias = "period-label", alias = "periodLabel")]
     pub period_label: NonBlankString,
 
-    #[serde(alias = "custom-period-label", alias = "customPeriodLabel")]
-    pub custom_period_label: NonBlankString,
-
     #[serde(alias = "counter-value-label", alias = "counterValueLabel")]
     pub counter_value_label: NonBlankString,
 
-    #[serde(alias = "counter-default-value", alias = "counterDefaultValue")]
-    pub counter_default_value: NonBlankString,
+    #[serde(alias = "mail-template-title", alias = "mailTemplateTitle")]
+    pub mail_template_title: NonBlankString,
+
+    #[serde(alias = "mail-template-to-label", alias = "mailTemplateToLabel")]
+    pub mail_template_to_label: NonBlankString,
+
+    #[serde(alias = "mail-template-body-label", alias = "mailTemplateBodyLabel")]
+    pub mail_template_body_label: NonBlankString,
+
+    #[serde(alias = "mail-template-close-button", alias = "mailTemplateCloseButton")]
+    pub mail_template_close_button: NonBlankString,
 
     #[serde(alias = "send-confirm-msg", alias = "sendConfirmMsg")]
     pub send_confirm_msg: NonBlankString,
 
-    #[serde(alias = "send-confirm-yes", alias = "sendConfirmYes")]
-    pub send_confirm_yes: NonBlankString,
-
-    #[serde(alias = "send-confirm-no", alias = "sendConfirmNo")]
-    pub send_confirm_no: NonBlankString,
-
     #[serde(alias = "send-button", alias = "sendButton")]
     pub send_button: NonBlankString,
+
+    #[serde(alias = "show-letter-button", alias = "showLetterButton")]
+    pub show_letter_button: NonBlankString,
 
     #[serde(alias = "send-more-button", alias = "sendMoreButton")]
     pub send_more_button: NonBlankString,
