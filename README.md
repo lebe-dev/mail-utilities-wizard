@@ -19,8 +19,13 @@ A service provides web interface for user:
 
 - Location
 - Type of counter (water, electricity)
+- Account ID
 - Value
 - Send button
+
+## Template variables
+
+Check `templates/example.txt`.
 
 ## RoadMap
 
