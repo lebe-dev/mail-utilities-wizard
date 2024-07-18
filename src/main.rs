@@ -9,6 +9,7 @@ use crate::config::AppConfig;
 use crate::config::file::loading_config_from_file;
 use crate::logging::get_logging_config;
 use crate::route::config::get_config_route;
+use crate::route::counter::send_counter_data_route;
 use crate::route::mail::get_mail_template_route;
 use crate::route::version::get_version_route;
 
@@ -50,6 +51,7 @@ async fn main() {
     let app = Router::new()
                         .route("/api/config", get(get_config_route))
                         .route("/api/mail/template", post(get_mail_template_route))
+                        .route("/api/counter", post(send_counter_data_route))
                         .route("/api/version", get(get_version_route))
                         .fallback(static_handler)
                         .with_state(Arc::new(app_state));

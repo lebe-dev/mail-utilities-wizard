@@ -28,18 +28,20 @@ pub struct MockSmtpMailSender {
     pub smtp_config: MailConfig,
     pub return_error: bool,
     pub expect_from: String,
+    pub expect_cc: String,
     pub expect_to: String,
     pub expect_subject: String,
     pub expect_body: String
 }
 
 impl MockSmtpMailSender {
-    pub fn new(config: &MailConfig, return_error: bool, expect_from: &str, expect_to: &str,
+    pub fn new(config: &MailConfig, return_error: bool, expect_from: &str, expect_cc: &str, expect_to: &str,
                expect_subject: &str, expect_body: &str) -> MockSmtpMailSender {
         MockSmtpMailSender {
             smtp_config: config.clone(),
             return_error,
             expect_from: expect_from.to_string(),
+            expect_cc: expect_cc.to_string(),
             expect_to: expect_to.to_string(),
             expect_subject: expect_subject.to_string(),
             expect_body: expect_body.to_string()
@@ -48,8 +50,9 @@ impl MockSmtpMailSender {
 }
 
 impl MailSend for MockSmtpMailSender {
-    fn send_mail(&self, from: &Email, to: &Email, subject: &NonBlankString, body: &NonBlankString) -> anyhow::Result<()> {
+    fn send_mail(&self, from: &Email, cc: &Email, to: &Email, subject: &NonBlankString, body: &NonBlankString) -> anyhow::Result<()> {
         assert_eq!(self.expect_from, from.as_ref());
+        assert_eq!(self.expect_cc, cc.as_ref());
         assert_eq!(self.expect_to, to.as_ref());
         assert_eq!(self.expect_subject, subject.to_string());
         assert_eq!(self.expect_body, body.to_string());

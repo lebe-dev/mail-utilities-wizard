@@ -32,7 +32,7 @@ export async function fetchMailTemplate(locationName: string, counterName: strin
     }
 }
 
-export async function sendCounterData(locationName: string, counterName: string, month: string, counterValue: string): Promise<AppConfig> {
+export async function sendCounterData(locationName: string, counterName: string, month: string, counterValue: string): Promise<string> {
     const report = new CounterData(locationName, counterName, month, counterValue);
 
     const response = await fetch('/api/counter', {
@@ -44,7 +44,7 @@ export async function sendCounterData(locationName: string, counterName: string,
     });
 
     if (response.status === 200) {
-        return response.json()
+        return response.statusText
 
     } else {
         throw new Error('config load error')

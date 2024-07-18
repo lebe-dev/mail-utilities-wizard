@@ -11,7 +11,7 @@ use non_blank_string_rs::NonBlankString;
 use crate::config::mail::MailConfig;
 
 pub trait MailSend {
-    fn send_mail(&self, from: &Email, to: &Email,
+    fn send_mail(&self, from: &Email, cc: &Email, to: &Email,
                  subject: &NonBlankString, body: &NonBlankString) -> anyhow::Result<()>;
 }
 
@@ -47,15 +47,16 @@ impl SmtpMailSender {
 }
 
 impl MailSend for SmtpMailSender {
-    fn send_mail(&self, from: &Email, to: &Email, subject: &NonBlankString, body: &NonBlankString) -> anyhow::Result<()> {
+    fn send_mail(&self, from: &Email, cc: &Email, to: &Email, subject: &NonBlankString, body: &NonBlankString) -> anyhow::Result<()> {
         info!("send mail to '{}'", to.as_ref());
         info!("- subject '{}'", subject);
 
         match Message::builder()
             .from(from.as_ref().parse()?)
+            .cc(cc.as_ref().parse()?)
             .to(to.as_ref().parse()?)
             .subject(subject.to_string())
-            .header(header::ContentType::TEXT_HTML)
+            .header(header::ContentType::TEXT_PLAIN)
             .body(body.to_string()) {
             Ok(msg) => {
                 let creds = Credentials::new(
@@ -110,11 +111,12 @@ mod smtp_mail_sender_tests {
 
         let from = get_random_email();
         let to = get_random_email();
+        let cc = get_random_email();
 
         let subject = get_random_subject();
         let body = get_random_body();
 
-        assert!(sender.send_mail(&from, &to, &subject, &body).is_ok())
+        assert!(sender.send_mail(&from, &cc, &to, &subject, &body).is_ok())
     }
 
     #[test]
@@ -125,12 +127,13 @@ mod smtp_mail_sender_tests {
         let sender = SmtpMailSender::new(&config);
 
         let from = get_random_email();
+        let cc = get_random_email();
         let to = get_random_email();
 
         let subject = get_random_subject();
         let body = get_random_body();
 
-        assert!(sender.send_mail(&from, &to, &subject, &body).is_err())
+        assert!(sender.send_mail(&from, &cc, &to, &subject, &body).is_err())
     }
 
     #[test]
@@ -141,12 +144,13 @@ mod smtp_mail_sender_tests {
         let sender = SmtpMailSender::new(&config);
 
         let from = get_random_email();
+        let cc = get_random_email();
         let to = get_random_email();
 
         let subject = get_random_subject();
         let body = get_random_body();
 
-        assert!(sender.send_mail(&from, &to, &subject, &body).is_err())
+        assert!(sender.send_mail(&from, &cc, &to, &subject, &body).is_err())
     }
 
     fn get_smtp_config() -> MailConfig {
