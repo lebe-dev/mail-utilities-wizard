@@ -9,3 +9,8 @@ pub struct AppConfigDto {
     pub page: PageConfig,
     pub locations: Vec<Location>
 }
+
+#[derive(PartialEq, Serialize, Clone, Debug)]
+pub struct MailTemplateDto {
+    pub template: String
+}

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use log::debug;
+use log::{debug, info};
 use tera::{Context, Tera};
 
 use crate::config::counter::Counter;
@@ -40,6 +40,8 @@ pub fn render_mail_template(template_file: &str, template_vars: &HashMap<String,
     debug!("---[RENDERED MAIL TEMPLATE]---");
     debug!("{result}");
     debug!("---[/RENDERED MAIL TEMPLATE]---");
+
+    info!("mail template has been rendered");
 
     Ok(result)
 }
