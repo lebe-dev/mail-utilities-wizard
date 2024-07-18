@@ -52,7 +52,8 @@ export async function sendCounterData(locationName: string, counterName: string,
 }
 
 export class MailTemplateResponse {
-    template: string = '';
+    subject: string = '';
+    body: string = '';
 }
 
 export class CounterData {

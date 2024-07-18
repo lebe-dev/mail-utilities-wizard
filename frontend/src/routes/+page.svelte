@@ -25,7 +25,8 @@
 	let customPeriodValue: string = '';
 	let counterValue: string = '';
 
-	let mailTemplate: string = '';
+	let mailTemplateSubject: string = '';
+	let mailTemplateBody: string = '';
 
 	let formValid: boolean = false;
 
@@ -175,7 +176,8 @@
 
 	function onShowMailTemplate() {
 		fetchMailTemplate(currentLocationName, currentCounterName, periodValue, counterValue).then((template) => {
-			mailTemplate = template.template
+			mailTemplateSubject = template.subject
+			mailTemplateBody = template.body
 
 		}).catch((e) => {
 			console.error(e);
@@ -232,8 +234,9 @@
 					</div>
 					<div class="modal-body">
 						<p><strong>{data.config.page.mailTemplateToLabel}</strong> {currentCounter.email}</p>
+						<p><strong>{data.config.page.mailTemplateSubjectLabel}</strong> {mailTemplateSubject}</p>
 						<p><strong>{data.config.page.mailTemplateBodyLabel}</strong></p>
-						<p style="white-space: pre-line;">{mailTemplate}</p>
+						<p style="white-space: pre-line;">{mailTemplateBody}</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"

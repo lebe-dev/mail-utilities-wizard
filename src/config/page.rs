@@ -42,6 +42,9 @@ pub struct PageConfig {
     #[serde(alias = "mail-template-to-label", alias = "mailTemplateToLabel")]
     pub mail_template_to_label: NonBlankString,
 
+    #[serde(alias = "mail-template-subject-label", alias = "mailTemplateSubjectLabel")]
+    pub mail_template_subject_label: NonBlankString,
+
     #[serde(alias = "mail-template-body-label", alias = "mailTemplateBodyLabel")]
     pub mail_template_body_label: NonBlankString,
 

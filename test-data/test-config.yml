@@ -38,6 +38,7 @@ page:
   counter-value-label: 'Counter value:'
   mail-template-title: 'Letter'
   mail-template-to-label: 'To:'
+  mail-template-subject-label: 'Subject:'
   mail-template-body-label: 'Body:'
   mail-template-close-button: 'Close'
 

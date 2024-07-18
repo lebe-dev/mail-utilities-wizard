@@ -24,7 +24,8 @@ pub fn get_template_vars(location_name: &str, month: &str, counter: &Counter,
     ])
 }
 
-pub fn render_mail_template(template_file: &str, template_vars: &HashMap<String,String>) -> anyhow::Result<String> {
+pub fn render_mail_body_template(template_file: &str,
+                                 template_vars: &HashMap<String,String>) -> anyhow::Result<String> {
 
     let mut tera = Tera::default();
     tera.add_template_file(&template_file, Some("mail"))?;
@@ -37,11 +38,34 @@ pub fn render_mail_template(template_file: &str, template_vars: &HashMap<String,
 
     let result = tera.render("mail", &context)?;
 
-    debug!("---[RENDERED MAIL TEMPLATE]---");
+    debug!("---[RENDERED MAIL BODY TEMPLATE]---");
     debug!("{result}");
-    debug!("---[/RENDERED MAIL TEMPLATE]---");
+    debug!("---[/RENDERED MAIL BODY TEMPLATE]---");
 
-    info!("mail template has been rendered");
+    info!("mail body template has been rendered");
+
+    Ok(result)
+}
+
+pub fn render_mail_subject_template(template: &str,
+                                    template_vars: &HashMap<String,String>) -> anyhow::Result<String> {
+
+    let mut tera = Tera::default();
+    tera.add_raw_template("subject", template)?;
+
+    let mut context = Context::new();
+
+    for (key, value) in template_vars {
+        context.insert(key, &value);
+    }
+
+    let result = tera.render("subject", &context)?;
+
+    debug!("---[RENDERED MAIL SUBJECT TEMPLATE]---");
+    debug!("{result}");
+    debug!("---[/RENDERED MAIL SUBJECT TEMPLATE]---");
+
+    info!("mail subject template has been rendered");
 
     Ok(result)
 }
@@ -56,7 +80,7 @@ mod tests {
     use non_blank_string_rs::NonBlankString;
 
     use crate::config::counter::Counter;
-    use crate::template::{get_template_vars, render_mail_template};
+    use crate::template::{get_template_vars, render_mail_body_template};
 
     #[test]
     fn template_render() {
@@ -75,7 +99,7 @@ mod tests {
 
         let vars = get_template_vars("Saint Petersburg, Nevsky Street, 123", "July", &counter, "123");
 
-        let result_template = render_mail_template(&template_file_path, &vars).unwrap();
+        let result_template = render_mail_body_template(&template_file_path, &vars).unwrap();
 
         let rendered_template = Path::new("test-data").join("rendered-template.txt");
         let expected_template = fs::read_to_string(rendered_template).unwrap();

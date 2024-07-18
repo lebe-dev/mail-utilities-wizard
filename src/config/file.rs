@@ -163,6 +163,7 @@ mod tests {
 
                 mail_template_title: NonBlankString::from_str("Letter").unwrap(),
                 mail_template_to_label: NonBlankString::from_str("To:").unwrap(),
+                mail_template_subject_label: NonBlankString::from_str("Subject:").unwrap(),
                 mail_template_body_label: NonBlankString::from_str("Body:").unwrap(),
                 mail_template_close_button: NonBlankString::from_str("Close").unwrap(),
 

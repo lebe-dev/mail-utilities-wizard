@@ -12,7 +12,7 @@ use non_blank_string_rs::NonBlankString;
 use crate::AppState;
 use crate::mail::{MailSend, SmtpMailSender};
 use crate::route::mail::CounterData;
-use crate::template::{get_template_vars, render_mail_body_template};
+use crate::template::{get_template_vars, render_mail_body_template, render_mail_subject_template};
 
 pub async fn send_counter_data_route(State(state): State<Arc<AppState>>,
                                      Json(request): Json<CounterData>) -> StatusCode {
@@ -33,32 +33,42 @@ pub async fn send_counter_data_route(State(state): State<Arc<AppState>>,
                     let template_file = Path::new("templates").join(&counter.mail_body_template_file);
                     let template_file = format!("{}", template_file.display());
 
-                    match render_mail_body_template(&template_file, &template_vars) {
-                        Ok(letter) => {
+                    match render_mail_subject_template(&template_file, &template_vars) {
+                        Ok(mail_subject) => {
 
-                            let sender = SmtpMailSender::new(&state.config.mail);
+                            match render_mail_body_template(&template_file, &template_vars) {
+                                Ok(mail_body) => {
 
-                            let cc = Email::from_str(&counter.email_copy).unwrap();
+                                    let sender = SmtpMailSender::new(&state.config.mail);
 
-                            match sender.send_mail(
-                                &state.config.mail.from,
-                                &cc,
-                                &counter.email,
-                                &NonBlankString::from_str("Показания счётчиков").unwrap(),
-                                &NonBlankString::from_str(&letter).unwrap()
-                            ) {
-                                Ok(_) => {
-                                    info!("counter data has been sent");
-                                    StatusCode::OK
+                                    let cc = Email::from_str(&counter.email_copy).unwrap();
+
+                                    match sender.send_mail(
+                                        &state.config.mail.from,
+                                        &cc,
+                                        &counter.email,
+                                        &NonBlankString::from_str(&mail_subject).unwrap(),
+                                        &NonBlankString::from_str(&mail_body).unwrap()
+                                    ) {
+                                        Ok(_) => {
+                                            info!("counter data has been sent");
+                                            StatusCode::OK
+                                        }
+                                        Err(e) => {
+                                            error!("counter data send error: {}", e);
+                                            StatusCode::INTERNAL_SERVER_ERROR
+                                        }
+                                    }
                                 }
                                 Err(e) => {
-                                    error!("counter data send error: {}", e);
+                                    error!("mail body template render error: {}", e);
                                     StatusCode::INTERNAL_SERVER_ERROR
                                 }
                             }
-                        }
+
+                        },
                         Err(e) => {
-                            error!("mail template render error: {}", e);
+                            error!("mail subject template render error: {}", e);
                             StatusCode::INTERNAL_SERVER_ERROR
                         }
                     }

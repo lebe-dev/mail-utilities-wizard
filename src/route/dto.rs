@@ -12,5 +12,6 @@ pub struct AppConfigDto {
 
 #[derive(PartialEq, Serialize, Clone, Debug)]
 pub struct MailTemplateDto {
-    pub template: String
+    pub subject: String,
+    pub body: String
 }

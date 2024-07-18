@@ -27,6 +27,7 @@ export class PageConfig {
 
     mailTemplateTitle: string = '';
     mailTemplateToLabel: string = '';
+    mailTemplateSubjectLabel: string = '';
     mailTemplateBodyLabel: string = '';
     mailTemplateCloseButton: string = '';
 

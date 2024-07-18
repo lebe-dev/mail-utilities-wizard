@@ -10,7 +10,7 @@ use serde::Deserialize;
 
 use crate::AppState;
 use crate::route::dto::MailTemplateDto;
-use crate::template::{get_template_vars, render_mail_body_template};
+use crate::template::{get_template_vars, render_mail_body_template, render_mail_subject_template};
 
 pub async fn get_mail_template_route(State(state): State<Arc<AppState>>,
                                      Json(request): Json<CounterData>) -> Result<Json<MailTemplateDto>, StatusCode> {
@@ -31,14 +31,26 @@ pub async fn get_mail_template_route(State(state): State<Arc<AppState>>,
                     let template_file = Path::new("templates").join(&counter.mail_body_template_file);
                     let template_file = format!("{}", template_file.display());
 
-                    match render_mail_body_template(&template_file, &template_vars) {
-                        Ok(template) => {
-                            let template = MailTemplateDto { template };
-                            Ok(Json(template))
+                    match render_mail_subject_template(&counter.mail_subject_template, &template_vars) {
+                        Ok(subject) => {
+                            match render_mail_body_template(&template_file, &template_vars) {
+                                Ok(body) => {
+                                    let template = MailTemplateDto {
+                                        subject,
+                                        body
+                                    };
+                                    Ok(Json(template))
+
+                                }
+                                Err(e) => {
+                                    error!("mail body template render error: {}", e);
+                                    Err(StatusCode::INTERNAL_SERVER_ERROR)
+                                }
+                            }
 
                         }
                         Err(e) => {
-                            error!("mail template render error: {}", e);
+                            error!("mail subject template render error: {}", e);
                             Err(StatusCode::INTERNAL_SERVER_ERROR)
                         }
                     }
