@@ -10,7 +10,7 @@ use serde::Deserialize;
 
 use crate::AppState;
 use crate::route::dto::MailTemplateDto;
-use crate::template::{get_template_vars, render_mail_template};
+use crate::template::{get_template_vars, render_mail_body_template};
 
 pub async fn get_mail_template_route(State(state): State<Arc<AppState>>,
                                      Json(request): Json<CounterData>) -> Result<Json<MailTemplateDto>, StatusCode> {
@@ -31,7 +31,7 @@ pub async fn get_mail_template_route(State(state): State<Arc<AppState>>,
                     let template_file = Path::new("templates").join(&counter.mail_body_template_file);
                     let template_file = format!("{}", template_file.display());
 
-                    match render_mail_template(&template_file, &template_vars) {
+                    match render_mail_body_template(&template_file, &template_vars) {
                         Ok(template) => {
                             let template = MailTemplateDto { template };
                             Ok(Json(template))
