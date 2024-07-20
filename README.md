@@ -11,6 +11,18 @@ Each utility company has own letter format requirements. It makes my parents to 
 
 It's a great opportunity to try [Axum](https://github.com/tokio-rs/axum) after many years with [actix](https://github.com/actix/actix-web) ;)
 
+## Install
+
+```shell
+mkdir -p logs,templates
+
+# Put your mail template into `templates` folder
+
+docker-compose up -d
+```
+
+Open http://localhost:8080
+
 ## How it works
 
 A service provides web interface for user:

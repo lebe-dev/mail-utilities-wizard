@@ -12,6 +12,18 @@
 
 Также это прекрасная возможность попробовать [Axum](https://github.com/tokio-rs/axum) спустя многих лет с [actix](https://github.com/actix/actix-web) ;)
 
+## Установка
+
+```shell
+mkdir -p logs,templates
+
+# Положите файл шаблона письма в папку `templates`
+
+docker-compose up -d
+```
+
+Open http://localhost:8080
+
 ## Как это работает
 
 Сервис предоставляет пользователю web-интерфейс с выбором локации, типа показаний, вводом значения и кнопкой Отправить.
