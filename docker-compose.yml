@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  app:
+    container_name: mail-utilities-wizard
+    image: registry.gitlab.com/tiny-services/mail-utilities-wizard:0.1.0
+    restart: always
+    volumes:
+      - ./config.yml:/app/config.yml
+    ports:
+      - "8080:8080"
