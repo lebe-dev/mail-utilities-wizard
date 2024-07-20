@@ -1,0 +1,75 @@
+bind: '127.0.0.1:8080'
+
+log-level: debug
+
+locations:
+  - name: 'Санкт-Петербург, Невский проспект, д.123, кв.27'
+    counters:
+
+    - name: 'вода'
+      account-id: '1234567890'
+      email: 'utilities@company.ru'
+      # Копия письма будет отправлена по этому адресу
+      # Если адрес не указан берётся значение из defaults.email-copy
+      #email-copy: 'utilities@company.ru'
+
+      # Шаблон темы письма
+      # Если не указан, берётся значение из defaults.mail-subject-template
+      #mail-subject-template: 'Counter {{ counter_name }} data for {{ month }}'
+
+      # Имя файла-шаблона для тела письма
+      # Если не указано, то берётся значение из defaults.mail-body-template
+      #mail-body-template-file: 'custom-template.txt'
+
+      # Подпись в письме
+      # Если не указано, то берётся значение из defaults.signature
+      #signature: 'Boris Britva'
+
+    - name: 'электричество'
+      account-id: '7567567567'
+      # Если компания не поддерживает отправку показаний счётчика на почту, то можно добавить ссылку и краткую инструкцию что делать
+      url: 'https://metrics.company.ru/population/send-and-pay/?from=main-menu'
+      manual: 'Показания за свет можно отправить только через сайт ТНС Энерго. Используйте номер лицевого счёта 7567567567 для входа.'
+
+# Настройки по умолчанию
+defaults:
+  # Кому отправлять копию письма
+  email-copy: 'me@mail.com'
+  mail-subject-template: 'Counter {{ counter_name }} data for {{ month }}'
+  mail-body-template-file: 'example.txt'
+  signature: 'Evgeny Lebedev'
+
+page:
+  locale: 'en'
+  title: 'Mail Utilities Wizard'
+  header: 'Send utilities data'
+  select-location-label: 'Select location:'
+  select-location-dropdown: '- Select -'
+  select-counter-label: 'Select counter:'
+  select-counter-dropdown: '- Select -'
+  account-id-label: 'Your account id:'
+  account-id-hint: 'Unique for each counter'
+  email-label: 'Data will be sent to e-mail:'
+  period-label: 'Period:'
+  counter-value-label: 'Counter value:'
+  mail-template-title: 'Letter'
+  mail-template-to-label: 'To:'
+  mail-template-subject-label: 'Subject:'
+  mail-template-body-label: 'Body:'
+  mail-template-close-button: 'Close'
+
+  send-confirm-msg: 'Do you want to continue?'
+  send-button: 'Send'
+  send-more-button: 'Send more'
+  show-letter-button: 'Show the letter'
+  app-error-msg: 'Application error'
+  sending-msg: 'Sending..'
+  send-success-msg: 'Counter value has been sent'
+  send-error-msg: 'Unable to send counter data, contact john@company.com'
+
+mail:
+  from: eugene@mail.com
+  host: localhost
+  port: 1025
+  username: change-me
+  password: change-me
