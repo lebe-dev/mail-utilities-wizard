@@ -15,6 +15,7 @@ It's a great opportunity to try [Axum](https://github.com/tokio-rs/axum) after m
 
 ```shell
 mkdir -p logs,templates
+chmod -R 777 logs
 
 # Put your mail template into `templates` folder
 
