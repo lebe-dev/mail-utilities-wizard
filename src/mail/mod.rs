@@ -101,6 +101,8 @@ mod smtp_mail_sender_tests {
         let _ = env_logger::builder().is_test(true).try_init();
     }
 
+    // TODO: use test containers
+    #[ignore]
     #[test]
     fn return_ok_after_send() {
         init();
