@@ -70,7 +70,7 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
     }
 
     let config = AppConfig {
-        port: loaded_config.port,
+        bind: loaded_config.bind,
         log_level: loaded_config.log_level,
         locations,
         defaults: loaded_config.defaults,
@@ -107,7 +107,7 @@ mod tests {
         let result_config = loading_config_from_file(&config_file).unwrap();
 
         let expected_config = AppConfig {
-            port: 8080,
+            bind: NonBlankString::from_str("127.0.0.1:8080").unwrap(),
             log_level: NonBlankString::from_str("debug").unwrap(),
             locations: vec![
                 Location {

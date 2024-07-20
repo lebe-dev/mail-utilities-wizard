@@ -56,7 +56,7 @@ async fn main() {
                         .fallback(static_handler)
                         .with_state(Arc::new(app_state));
 
-    let bind = format!("127.0.0.1:{}", config.port);
+    let bind = format!("{}", config.bind);
 
     let listener = tokio::net::TcpListener::bind(&bind).await.unwrap();
 

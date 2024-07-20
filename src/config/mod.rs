@@ -16,7 +16,7 @@ pub mod page;
 #[derive(PartialEq, Deserialize, Clone, Debug)]
 #[serde(rename_all = "kebab-case")]
 pub struct AppConfig {
-    pub port: u16,
+    pub bind: NonBlankString,
     pub log_level: NonBlankString,
     pub locations: Vec<Location>,
     pub defaults: DefaultsConfig,
