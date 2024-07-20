@@ -39,5 +39,6 @@ Check `templates/example.txt`.
 
 ## RoadMap
 
-1. Support state for each location
-2. Remember about counters via mail
+1. Support optional password access 
+2. Support state for each location
+3. Remember about counters via mail
