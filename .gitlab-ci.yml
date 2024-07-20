@@ -1,0 +1,17 @@
+stages:
+  - build-image
+
+build-image:
+  stage: build-image
+
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+  script:
+    - APP_VERSION=`cat Cargo.toml | grep "version = " | head -1 | cut -d "=" -f2 | tr -d '"' | tr -d ' '`
+    - DOCKER_IMAGE=$CI_REGISTRY_IMAGE:$APP_VERSION
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
