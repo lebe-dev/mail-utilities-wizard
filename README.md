@@ -28,8 +28,9 @@ Open http://localhost:8080
 A service provides web interface for user:
 
 - Location
-- Type of counter (water, electricity)
+- Type of counter (water, electricity, etc)
 - Account ID
+- Month (default: previous month)
 - Value
 - Send button
 
