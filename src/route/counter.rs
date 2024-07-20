@@ -41,12 +41,12 @@ pub async fn send_counter_data_route(State(state): State<Arc<AppState>>,
 
                                     let sender = SmtpMailSender::new(&state.config.mail);
 
+                                    let to = Email::from_str(&counter.email).unwrap();
                                     let cc = Email::from_str(&counter.email_copy).unwrap();
 
                                     match sender.send_mail(
                                         &state.config.mail.from,
-                                        &cc,
-                                        &counter.email,
+                                        &cc, &to,
                                         &NonBlankString::from_str(&mail_subject).unwrap(),
                                         &NonBlankString::from_str(&mail_body).unwrap()
                                     ) {

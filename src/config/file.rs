@@ -54,6 +54,8 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
                     account_id: counter.account_id,
                     email: counter.email,
                     email_copy,
+                    url: counter.url,
+                    manual: counter.manual,
                     mail_subject_template,
                     mail_body_template_file,
                     signature,
@@ -114,22 +116,26 @@ mod tests {
                     name: NonBlankString::from_str("Saint Petersburg, Nevsky Street, 123").unwrap(),
                     counters: vec![
                         Counter {
-                            name: NonBlankString::from_str("Electricity").unwrap(),
-                            account_id: NonBlankString::from_str("85678463456").unwrap(),
-                            email: Email::from_str("electricity@company1.com").unwrap(),
-                            email_copy: "default@mail.com".to_string(),
-                            mail_subject_template: "Counter {{ counter_name }} data for {{ month }}".to_string(),
-                            mail_body_template_file: "example.txt".to_string(),
-                            signature: "Evgeny Lebedev".to_string(),
-                        },
-                        Counter {
                             name: NonBlankString::from_str("Water").unwrap(),
                             account_id: NonBlankString::from_str("568346545734").unwrap(),
-                            email: Email::from_str("water@company2.com").unwrap(),
+                            email: "water@company2.com".to_string(),
                             email_copy: "relative@mail.com".to_string(),
+                            url: "".to_string(),
+                            manual: "".to_string(),
                             mail_subject_template: "Counter {{ counter_name }} data for {{ month }} 2".to_string(),
                             mail_body_template_file: "custom-template.txt".to_string(),
                             signature: "Boris Britva".to_string(),
+                        },
+                        Counter {
+                            name: NonBlankString::from_str("Electricity").unwrap(),
+                            account_id: NonBlankString::from_str("85678463456").unwrap(),
+                            email: "".to_string(),
+                            email_copy: "default@mail.com".to_string(),
+                            url: "https://metrics.company.com/population/send-and-pay/?from=main-menu".to_string(),
+                            manual: "Electricity provider requires to send counter data via web site. Use account-id to log-in.".to_string(),
+                            mail_subject_template: "Counter {{ counter_name }} data for {{ month }}".to_string(),
+                            mail_body_template_file: "example.txt".to_string(),
+                            signature: "Evgeny Lebedev".to_string(),
                         }
                     ]
                 }

@@ -110,6 +110,10 @@
 		}
 	}
 
+	function isUnsupportedCounter(counter: Counter): boolean {
+		return counter.url.length > 0 && counter.manual.length > 0
+	}
+
 	function isPeriodSelected(): boolean {
 		return periodValue.length > 0;
 	}
@@ -286,76 +290,87 @@
 					<div class="form-text">{data.config.page.accountIdHint}</div>
 				</div>
 
-				<div class="mb-3">
-					<label for="email">
-						{data.config.page.emailLabel}
-						<input id="email" value={currentCounter.email} disabled class="form-control"/>
-					</label>
-				</div>
-
-				<div class="mb-3">
-					<div class="mb-3">{data.config.page.periodLabel} {periodValue}</div>
-
-					<div class="btn-group" role="group" aria-label="Select period">
-						<button type="button" on:click={onSelectPreviousMonth} disabled={counterDataSending}
-								class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
-						<button type="button" on:click={onSelectCurrentMonth} disabled={counterDataSending}
-								class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active rounded-end me-3' : 'btn btn-outline-primary rounded-end me-3'}>{getCurrentMonth()}</button>
-						<input id="period-value" type="month" bind:value={customPeriodValue} disabled={counterDataSending}
-							   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-primary' : 'form-control'}
-							   on:change={onPeriodValueUpdate}>
+				{#if isUnsupportedCounter(currentCounter)}
+					<div class="rounded border border-primary p-3 mb-3">
+						<div class="mb-3">{currentCounter.manual}</div>
+						<div>
+							<a href={currentCounter.url}>{currentCounter.url}</a>
+						</div>
 					</div>
-				</div>
 
-				{#if isPeriodSelected()}
+				{:else}
 					<div class="mb-3">
-						<label for="counter-value">
-							{data.config.page.counterValueLabel}
-							<input id="counter-value" type="text"
-								   bind:value={counterValue} on:keyup={onCounterValueUpdate}
-								   disabled={counterDataSending}
-								   class="form-control" required>
+						<label for="email">
+							{data.config.page.emailLabel}
+							<input id="email" value={currentCounter.email} disabled class="form-control"/>
 						</label>
 					</div>
 
-					<hr>
+					<div class="mb-3">
+						<div class="mb-3">{data.config.page.periodLabel} {periodValue}</div>
 
-					<div>
-						{#if !counterDataSending}
-						<button class="btn btn-primary me-3" type="button" on:click={onSend}
-								disabled={!formValid}>{data.config.page.sendButton}</button>
-
-						<button type="button" class="btn btn-light" data-bs-toggle="modal"
-								on:click={onShowMailTemplate} disabled={!formValid}
-								data-bs-target="#mailTemplateModal">
-							{data.config.page.showLetterButton}
-						</button>
-						{/if}
-
-						{#if counterDataSending}
-						<div class="mt-3 mb-3">
-							<div role="status" class="mb-3">{data.config.page.sendingMsg}</div>
-							<div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-								<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
-							</div>
+						<div class="btn-group" role="group" aria-label="Select period">
+							<button type="button" on:click={onSelectPreviousMonth} disabled={counterDataSending}
+									class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
+							<button type="button" on:click={onSelectCurrentMonth} disabled={counterDataSending}
+									class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active rounded-end me-3' : 'btn btn-outline-primary rounded-end me-3'}>{getCurrentMonth()}</button>
+							<input id="period-value" type="month" bind:value={customPeriodValue} disabled={counterDataSending}
+								   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-primary' : 'form-control'}
+								   on:change={onPeriodValueUpdate}>
 						</div>
-						{/if}
-						{#if showSuccessMessage}
-							<div class="mt-3">
-								<div class="alert alert-primary" role="alert">
-									{data.config.page.sendSuccessMsg}
-								</div>
-							</div>
-						{/if}
-						{#if showErrorMessage}
-							<div class="mt-3">
-								<div class="alert alert-danger" role="alert">
-								{data.config.page.sendErrorMsg}
-							</div>
-						</div>
-						{/if}
 					</div>
+
+					{#if isPeriodSelected()}
+						<div class="mb-3">
+							<label for="counter-value">
+								{data.config.page.counterValueLabel}
+								<input id="counter-value" type="text"
+									   bind:value={counterValue} on:keyup={onCounterValueUpdate}
+									   disabled={counterDataSending}
+									   class="form-control" required>
+							</label>
+						</div>
+
+						<hr>
+
+						<div>
+							{#if !counterDataSending}
+								<button class="btn btn-primary me-3" type="button" on:click={onSend}
+										disabled={!formValid}>{data.config.page.sendButton}</button>
+
+								<button type="button" class="btn btn-light" data-bs-toggle="modal"
+										on:click={onShowMailTemplate} disabled={!formValid}
+										data-bs-target="#mailTemplateModal">
+									{data.config.page.showLetterButton}
+								</button>
+							{/if}
+
+							{#if counterDataSending}
+								<div class="mt-3 mb-3">
+									<div role="status" class="mb-3">{data.config.page.sendingMsg}</div>
+									<div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+									</div>
+								</div>
+							{/if}
+							{#if showSuccessMessage}
+								<div class="mt-3">
+									<div class="alert alert-primary" role="alert">
+										{data.config.page.sendSuccessMsg}
+									</div>
+								</div>
+							{/if}
+							{#if showErrorMessage}
+								<div class="mt-3">
+									<div class="alert alert-danger" role="alert">
+										{data.config.page.sendErrorMsg}
+									</div>
+								</div>
+							{/if}
+						</div>
+					{/if}
 				{/if}
+
 			{/if}
 		{/if}
 

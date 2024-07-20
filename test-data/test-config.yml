@@ -5,10 +5,6 @@ log-level: debug
 locations:
   - name: 'Saint Petersburg, Nevsky Street, 123'
     counters:
-    - name: 'Electricity'
-      account-id: '85678463456'
-      email: 'electricity@company1.com'
-
     - name: 'Water'
       account-id: '568346545734'
       email: 'water@company2.com'
@@ -16,6 +12,11 @@ locations:
       mail-subject-template: 'Counter {{ counter_name }} data for {{ month }} 2'
       mail-body-template-file: 'custom-template.txt'
       signature: 'Boris Britva'
+
+    - name: 'Electricity'
+      account-id: '85678463456'
+      url: 'https://metrics.company.com/population/send-and-pay/?from=main-menu'
+      manual: 'Electricity provider requires to send counter data via web site. Use account-id to log-in.'
 
 defaults:
   email-copy: 'default@mail.com'

@@ -76,7 +76,6 @@ mod tests {
     use std::path::Path;
     use std::str::FromStr;
 
-    use email_type_rs::email::Email;
     use non_blank_string_rs::NonBlankString;
 
     use crate::config::counter::Counter;
@@ -90,8 +89,10 @@ mod tests {
         let counter = Counter {
             name: NonBlankString::from_str("Electricity").unwrap(),
             account_id: NonBlankString::from_str("92358457293485").unwrap(),
-            email: Email::from_str("whatever@company.com").unwrap(),
-            email_copy: "".to_string(),
+            email: "whatever@company.com".to_string(),
+            email_copy: "whatever@company.com".to_string(),
+            url: "".to_string(),
+            manual: "".to_string(),
             mail_subject_template: "whatever".to_string(),
             mail_body_template_file: "whatever".to_string(),
             signature: "Evgeny Lebedev".to_string(),

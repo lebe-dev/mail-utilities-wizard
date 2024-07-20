@@ -1,4 +1,3 @@
-use email_type_rs::email::Email;
 use non_blank_string_rs::NonBlankString;
 use serde::{Deserialize, Serialize};
 
@@ -9,11 +8,19 @@ pub struct Counter {
 
     #[serde(alias = "account-id", alias = "accountId")]
     pub account_id: NonBlankString,
-    pub email: Email,
+
+    #[serde(default)]
+    pub email: String,
 
     #[serde(alias = "email-copy", alias = "emailCopy")]
     #[serde(default)]
     pub email_copy: String,
+
+    #[serde(default)]
+    pub url: String,
+
+    #[serde(default)]
+    pub manual: String,
 
     #[serde(alias = "mail-subject-template", alias = "mailSubjectTemplate")]
     #[serde(default)]

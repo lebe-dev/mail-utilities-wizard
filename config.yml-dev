@@ -5,7 +5,8 @@ log-level: debug
 locations:
   - name: 'Saint Petersburg, Nevsky Street, 123'
     counters:
-    - name: 'Electricity'
+
+    - name: 'Water'
       account-id: '1234567890'
       email: 'utilities@company.com'
       # You can override default email-copy value
@@ -19,6 +20,11 @@ locations:
 
       # You can override default signature
       #signature: 'Boris Britva'
+
+    - name: 'Electricity'
+      account-id: '7567567567'
+      url: 'https://metrics.company.com/population/send-and-pay/?from=main-menu'
+      manual: 'Electricity provider requires to send counter data via web site. Use account-id to log-in.'
 
 defaults:
   email-copy: 'me@mail.com'

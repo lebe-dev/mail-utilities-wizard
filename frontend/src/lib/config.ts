@@ -53,4 +53,6 @@ export class Counter {
     name: string = '';
     accountId: string = '';
     email: string = '';
+    url: string = '';
+    manual: string = '';
 }
