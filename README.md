@@ -1,7 +1,5 @@
 # Mail Utilities Wizard
 
-**Status:** Work in progress
-
 A tiny web-service that helps send meter readings to utility companies.
 
 [На русском](README.ru.md)
