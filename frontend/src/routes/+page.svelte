@@ -294,7 +294,7 @@
 					<div class="rounded border border-primary p-3 mb-3">
 						<div class="mb-3">{currentCounter.manual}</div>
 						<div>
-							<a href={currentCounter.url}>{currentCounter.url}</a>
+							<a href={currentCounter.url} target="_blank">{currentCounter.url}</a>
 						</div>
 					</div>
 
