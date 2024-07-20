@@ -18,7 +18,7 @@ RUN mkdir -p /build/static && \
     cp upx-4.0.2-amd64_linux/upx /usr/bin/upx && chmod +x /usr/bin/upx
 
 COPY . /build
-COPY --from=frontend-build /build/build/ /build/backend/static/
+COPY --from=frontend-build /build/build/ /build/static/
 
 RUN cargo test && \
     cargo build --release && \
