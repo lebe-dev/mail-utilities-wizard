@@ -3,7 +3,7 @@ version: '3.3'
 services:
   app:
     container_name: mail-utilities-wizard
-    image: registry.gitlab.com/tiny-services/mail-utilities-wizard:1.0.0
+    image: registry.gitlab.com/tiny-services/mail-utilities-wizard:1.1.0
     restart: always
     volumes:
       - ./config.yml:/app/config.yml
