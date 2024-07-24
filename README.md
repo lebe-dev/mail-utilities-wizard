@@ -19,6 +19,11 @@ chmod -R 777 logs
 
 # Put your mail template into `templates` folder
 
+# Prepare config file
+cp config.yml-dist config.yml
+
+# Edit config.yml
+
 docker-compose up -d
 ```
 
