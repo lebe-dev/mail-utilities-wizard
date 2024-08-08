@@ -1,5 +1,7 @@
 bind: '127.0.0.1:8080'
 
+db-cnn: 'sqlite://app.db?mode=rwc'
+
 log-level: debug
 
 locations:

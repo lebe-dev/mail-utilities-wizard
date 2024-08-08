@@ -5,9 +5,9 @@ use config::Config;
 use email_type_rs::email::Email;
 use log::info;
 
-use crate::config::AppConfig;
 use crate::config::counter::Counter;
 use crate::config::location::Location;
+use crate::config::AppConfig;
 
 pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppConfig> {
     info!("loading config from file '{config_file_path}'");
@@ -73,6 +73,7 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
 
     let config = AppConfig {
         bind: loaded_config.bind,
+        db_cnn: loaded_config.db_cnn,
         log_level: loaded_config.log_level,
         locations,
         defaults: loaded_config.defaults,
@@ -94,13 +95,13 @@ mod tests {
     use email_type_rs::email::Email;
     use non_blank_string_rs::NonBlankString;
 
-    use crate::config::AppConfig;
     use crate::config::counter::Counter;
     use crate::config::defaults::DefaultsConfig;
     use crate::config::file::loading_config_from_file;
     use crate::config::location::Location;
     use crate::config::mail::MailConfig;
     use crate::config::page::PageConfig;
+    use crate::config::AppConfig;
 
     #[test]
     fn config_load() {
@@ -110,6 +111,7 @@ mod tests {
 
         let expected_config = AppConfig {
             bind: NonBlankString::from_str("127.0.0.1:8080").unwrap(),
+            db_cnn: NonBlankString::from_str("sqlite://app.db?mode=rwc").unwrap(),
             log_level: NonBlankString::from_str("debug").unwrap(),
             locations: vec![
                 Location {

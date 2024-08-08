@@ -17,6 +17,7 @@ pub mod page;
 #[serde(rename_all = "kebab-case")]
 pub struct AppConfig {
     pub bind: NonBlankString,
+    pub db_cnn: NonBlankString,
     pub log_level: NonBlankString,
     pub locations: Vec<Location>,
     pub defaults: DefaultsConfig,
