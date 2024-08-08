@@ -1,12 +1,12 @@
 use std::sync::Arc;
 
-use axum::{Router, routing::get, routing::post};
 use axum::http::{header, StatusCode, Uri};
 use axum::response::{Html, IntoResponse, Response};
+use axum::{routing::get, routing::post, Router};
 use rust_embed::Embed;
 
-use crate::config::AppConfig;
 use crate::config::file::loading_config_from_file;
+use crate::config::AppConfig;
 use crate::logging::get_logging_config;
 use crate::route::config::get_config_route;
 use crate::route::counter::send_counter_data_route;
@@ -23,7 +23,7 @@ pub mod mail;
 #[cfg(test)]
 pub mod tests;
 
-pub const VERSION: &str = "0.1.0 #UNKNOWN";
+pub const VERSION: &str = "1.2.0 #UNKNOWN";
 
 static INDEX_HTML: &str = "index.html";
 
