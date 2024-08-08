@@ -12,11 +12,13 @@ use crate::route::config::get_config_route;
 use crate::route::counter::send_counter_data_route;
 use crate::route::mail::get_mail_template_route;
 use crate::route::version::get_version_route;
+use crate::state::{create_db_tables, get_db_connection};
 
 pub mod config;
 
 pub mod logging;
 pub mod route;
+pub mod state;
 pub mod template;
 pub mod mail;
 
@@ -43,6 +45,9 @@ async fn main() {
         Ok(_) => {}
         Err(e) => eprintln!("{}", e)
     }
+
+    let db_pool = get_db_connection(&config.db_cnn).await.expect("db error");
+    create_db_tables(&db_pool).await.expect("db > create tables error");
 
     let app_state = AppState {
         config: config.clone(),
