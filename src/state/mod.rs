@@ -21,6 +21,8 @@ pub async fn create_db_tables(pool: &Pool<Sqlite>) -> Result<(), Error> {
         r#"
 CREATE TABLE IF NOT EXISTS history (
   id INTEGER NOT NULL PRIMARY KEY,
+  location VARCHAR,
+  account_id VARCHAR,
   counter_name VARCHAR,
   month VARCHAR,
   year INTEGER,
