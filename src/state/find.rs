@@ -3,22 +3,6 @@ use log::{debug, info};
 use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Pool, Row, Sqlite};
 
-pub async fn insert_history_record(pool: &Pool<Sqlite>,
-                                 record: &HistoryRecord) -> Result<(), Error> {
-    info!("insert history record '{:?}'", record);
-
-    sqlx::query(r#"INSERT INTO history (counter_name, month, year, value, created) VALUES ($1, $2, $3, $4, $5);"#)
-        .bind(&record.counter_name)
-        .bind(&record.month)
-        .bind(&record.year)
-        .bind(&record.value)
-        .bind(&record.created)
-        .execute(pool)
-        .await?;
-
-    Ok(())
-}
-
 pub async fn find_history_records(pool: &Pool<Sqlite>) -> Result<Vec<HistoryRecord>, Error> {
     info!("find history records..");
 
@@ -44,22 +28,11 @@ pub async fn find_history_records(pool: &Pool<Sqlite>) -> Result<Vec<HistoryReco
     Ok(results)
 }
 
-pub async fn remove_history_record(pool: &Pool<Sqlite>,
-                                   record_id: u32) -> Result<(), Error> {
-    info!("remove history record by id {record_id}");
-
-    sqlx::query(r#"DELETE FROM history WHERE id=$1;"#)
-        .bind(record_id)
-        .execute(pool)
-        .await?;
-
-    Ok(())
-}
-
 #[cfg(test)]
 mod tests {
-    use crate::state::find::{find_history_records, insert_history_record, remove_history_record};
-    use crate::state::history::HistoryRecord;
+    use crate::state::find::find_history_records;
+    use crate::state::history::{insert_history_record, HistoryRecord};
+    use crate::state::remove::remove_history_record;
     use crate::tests::state::prepare_test_memory_db;
     use crate::tests::{get_random_string, init_logging};
     use chrono::Local;

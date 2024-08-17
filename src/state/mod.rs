@@ -4,6 +4,7 @@ use sqlx::{Error, Pool, Sqlite};
 
 pub mod history;
 pub mod find;
+pub mod remove;
 
 pub async fn get_db_connection(db_cnn: &str) -> Result<Pool<Sqlite>, Error> {
     info!("connecting to database '{db_cnn}'..");
