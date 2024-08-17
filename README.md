@@ -4,6 +4,22 @@ A tiny web-service that helps send meter readings to utility companies.
 
 [На русском](README.ru.md)
 
+Main page with history data:
+
+![Web-сервис для отправки показаний счётчиков по почте](docs/ru/history.png)
+
+Send page:
+
+![Web-сервис для отправки показаний счётчиков по почте](docs/ru/send.png)
+
+Letter preview:
+
+![Пример предпросмотра письма в интерфейсе приложения](docs/ru/letter-preview.png)
+
+If company doesn't support direct mail send you can show a proper link and short manual:
+
+![Ссылка на сайт компании для отправки показаний](docs/ru/unsupported-counters.png)
+
 ## My story
 
 My aged parents send house counters to different public utilities by mail. Such companies don't have any web-sites or mobile apps.
