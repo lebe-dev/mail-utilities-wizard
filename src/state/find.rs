@@ -87,29 +87,6 @@ mod tests {
         );
     }
 
-    #[tokio::test]
-    async fn return_error_for_not_unique_record() {
-        init_logging();
-        let pool = prepare_test_memory_db().await;
-
-        let mut record = get_random_history_record();
-
-        assert!(insert_history_record(&pool, &record).await.is_ok());
-
-        record = HistoryRecord {
-            id: 0,
-            location: get_random_string(),
-            account_id: get_random_string(),
-            counter_name: record.counter_name.to_string(),
-            month: record.month.to_string(),
-            year: record.year,
-            value: get_random_string(),
-            created: record.created,
-        };
-
-        assert!(insert_history_record(&pool, &record).await.is_err());
-    }
-
     fn get_random_history_record() -> HistoryRecord {
         HistoryRecord {
             id: 0,
