@@ -14,10 +14,11 @@ It's a great opportunity to try [Axum](https://github.com/tokio-rs/axum) after m
 ## Install
 
 ```shell
-mkdir -p logs,templates
-chmod -R 777 logs
+mkdir {data,templates,logs}
+chmod -R 777 {data,logs}
 
 # Put your mail template into `templates` folder
+cp templates/example.txt templates/template.txt
 
 # Prepare config files
 cp config.yml-dist config.yml
