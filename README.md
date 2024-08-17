@@ -49,4 +49,4 @@ Check `templates/example.txt`.
 
 1. Support optional password access 
 2. Support state for each location
-3. Remember about counters via mail
+3. Remind about data sending
