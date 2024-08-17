@@ -58,6 +58,7 @@ page:
   send-button: 'Send'
   send-more-button: 'Send more'
   show-letter-button: 'Show the letter'
+  back-button: 'Back'
   app-error-msg: 'Application error'
   sending-msg: 'Sending..'
   send-success-msg: 'Counter value has been sent'

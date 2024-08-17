@@ -37,6 +37,7 @@ export class PageConfig {
     sendButton: string = '';
 
     showLetterButton: string = '';
+    backButton: string = '';
 
     sendMoreButton: string = '';
 

@@ -342,14 +342,21 @@
 
 						<div>
 							{#if !counterDataSending}
-								<button class="btn btn-primary me-3" type="button" on:click={onSend}
-										disabled={!formValid}>{data.config.page.sendButton}</button>
+								<div class="row">
+									<div class="col-6">
+										<button class="btn btn-primary me-3" type="button" on:click={onSend}
+												disabled={!formValid}>{data.config.page.sendButton}</button>
 
-								<button type="button" class="btn btn-light" data-bs-toggle="modal"
-										on:click={onShowMailTemplate} disabled={!formValid}
-										data-bs-target="#mailTemplateModal">
-									{data.config.page.showLetterButton}
-								</button>
+										<button type="button" class="btn btn-light" data-bs-toggle="modal"
+												on:click={onShowMailTemplate} disabled={!formValid}
+												data-bs-target="#mailTemplateModal">
+											{data.config.page.showLetterButton}
+										</button>
+									</div>
+									<div class="col-6 text-end">
+										<a class="btn btn-light" href="/">{data.config.page.backButton}</a>
+									</div>
+								</div>
 							{/if}
 
 							{#if counterDataSending}
@@ -389,6 +396,10 @@
 </section>
 
 <style>
+	.container {
+		max-width: 800px;
+	}
+
 	.btn {
 		min-width: 150px;
 	}

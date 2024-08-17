@@ -180,6 +180,7 @@ mod tests {
                 send_button: NonBlankString::from_str("Send").unwrap(),
                 show_letter_button: NonBlankString::from_str("Show the letter").unwrap(),
                 send_more_button: NonBlankString::from_str("Send more").unwrap(),
+                back_button: NonBlankString::from_str("Back").unwrap(),
 
                 app_error_msg: NonBlankString::from_str("Application error").unwrap(),
 

@@ -65,6 +65,7 @@ page:
   send-button: 'Отправить'
   send-more-button: 'Отправить ещё'
   show-letter-button: 'Предпросмотр письма'
+  back-button: 'Вернуться назад'
   app-error-msg: 'Ошибка приложения'
   sending-msg: 'Отправка..'
   send-success-msg: 'Показания счётчика успешно отправлены'

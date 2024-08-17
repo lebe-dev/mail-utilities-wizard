@@ -63,6 +63,9 @@ pub struct PageConfig {
     #[serde(alias = "send-more-button", alias = "sendMoreButton")]
     pub send_more_button: NonBlankString,
 
+    #[serde(alias = "back-button", alias = "backButton")]
+    pub back_button: NonBlankString,
+
     #[serde(alias = "app-error-msg", alias = "appErrorMsg")]
     pub app_error_msg: NonBlankString,
 
