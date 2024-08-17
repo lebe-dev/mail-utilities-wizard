@@ -22,8 +22,9 @@ If company doesn't support direct mail send you can show a proper link and short
 
 ## My story
 
-My aged parents send house counters to different public utilities by mail. Such companies don't have any web-sites or mobile apps.
-Each utility company has own letter format requirements. It makes my parents to suffer.
+My elderly parents have to send utility meter readings to various companies by mail. 
+These companies don't have websites or mobile apps. Each utility company has its own letter format requirements, 
+which causes difficulties for my parents.
 
 It's a great opportunity to try [Axum](https://github.com/tokio-rs/axum) after many years with [actix](https://github.com/actix/actix-web) ;)
 
