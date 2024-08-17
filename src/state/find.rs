@@ -21,7 +21,7 @@ pub async fn find_history_record(pool: &Pool<Sqlite>, counter_name: &str,
 pub async fn find_history_records(pool: &Pool<Sqlite>) -> Result<Vec<HistoryRecord>, Error> {
     info!("find history records..");
 
-    let select_query = sqlx::query("SELECT * FROM history ORDER BY created");
+    let select_query = sqlx::query("SELECT * FROM history ORDER BY created DESC");
     let results: Vec<HistoryRecord> = select_query
         .map(|row: SqliteRow| get_history_record_from_row(&row))
         .fetch_all(pool)
