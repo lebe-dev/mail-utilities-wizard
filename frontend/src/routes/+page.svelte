@@ -110,6 +110,10 @@
 </section>
 
 <style>
+	.container {
+		max-width: 1024px;
+	}
+
 	.btn {
 		min-width: 150px;
 	}
