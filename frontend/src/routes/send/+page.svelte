@@ -318,11 +318,11 @@
 
 						<div class="btn-group" role="group" aria-label="Select period">
 							<button type="button" on:click={onSelectPreviousMonth} disabled={counterDataSending}
-									class={periodValue === getPreviousMonth() ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}>{getPreviousMonth()}</button>
+									class={periodValue === getPreviousMonth() ? 'btn btn-outline-secondary active' : 'btn btn-outline-secondary'}>{getPreviousMonth()}</button>
 							<button type="button" on:click={onSelectCurrentMonth} disabled={counterDataSending}
-									class={periodValue === getCurrentMonth() ? 'btn btn-outline-primary active rounded-end me-3' : 'btn btn-outline-primary rounded-end me-3'}>{getCurrentMonth()}</button>
+									class={periodValue === getCurrentMonth() ? 'btn btn-outline-secondary active rounded-end me-3' : 'btn btn-outline-secondary rounded-end me-3'}>{getCurrentMonth()}</button>
 							<input id="period-value" type="month" bind:value={customPeriodValue} disabled={counterDataSending}
-								   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-primary' : 'form-control'}
+								   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-secondary' : 'form-control'}
 								   on:change={onPeriodValueUpdate}>
 						</div>
 					</div>
