@@ -2,7 +2,7 @@ Hello,
 
 My account id {{ account_id }}.
 
-This is {{ counter_name }} counter for location {{ location }} for {{ month }}.
+This is {{ counter_name }} counter for location {{ location }} for {{ month }} {{ year }}.
 
 Value is {{ counter_value }}.
 
