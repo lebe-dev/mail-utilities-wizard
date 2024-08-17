@@ -55,6 +55,8 @@ mod tests {
     use crate::tests::state::prepare_test_memory_db;
     use crate::tests::{get_random_string, init_logging};
     use chrono::Local;
+    use std::thread;
+    use std::time::Duration;
 
     #[tokio::test]
     async fn crud() {
@@ -85,6 +87,27 @@ mod tests {
         assert!(
             results.iter().find(|h|h.id == result1.id).is_none()
         );
+    }
+
+    #[tokio::test]
+    async fn last_items_should_come_first() {
+        init_logging();
+        let pool = prepare_test_memory_db().await;
+
+        let record1 = get_random_history_record();
+        thread::sleep(Duration::from_secs(1));
+        let record2 = get_random_history_record();
+
+        insert_history_record(&pool, &record1).await.unwrap();
+        insert_history_record(&pool, &record2).await.unwrap();
+
+        let results = find_history_records(&pool).await.unwrap();
+
+        let result = results.first().unwrap();
+
+        assert_eq!(result.location, record2.location);
+        assert_eq!(result.counter_name, record2.counter_name);
+        assert_eq!(result.value, record2.value);
     }
 
     fn get_random_history_record() -> HistoryRecord {
