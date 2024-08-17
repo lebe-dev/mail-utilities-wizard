@@ -3,6 +3,7 @@
 	import {fetchAppConfig} from "$lib/api";
 	import {AppConfig} from "$lib/config";
 	import {onMount} from "svelte";
+	import {getMonthName} from "$lib/period.js";
 
 	export let data: PageData;
 
@@ -32,6 +33,12 @@
 			pageLoading = false;
 			unexpectedError = true;
 		})
+	}
+
+	function getHumanDate(timestamp: number): string {
+		console.log(timestamp);
+		const date = new Date(timestamp * 1000);
+		return `${date.getDate()} ${getMonthName(date, data.config.locale.language)} ${date.getFullYear()}`;
 	}
 </script>
 
@@ -63,7 +70,7 @@
 				<tbody>
 				{#each data.config.historyRecords as record}
 					<tr>
-						<td class="text-size-mobile">{new Date(record.created)}</td>
+						<td class="text-size-mobile">{getHumanDate(record.created)}</td>
 						<td class="text-size-mobile">
 							<div><strong>{data.config.locale.historyRecordLocation}</strong></div>
 							<div>{record.location}</div>
@@ -93,7 +100,7 @@
 				<tbody>
 				{#each data.config.historyRecords as record}
 					<tr>
-						<td>{record.created}</td>
+						<td>{getHumanDate(record.created)}</td>
 						<td>{record.location}</td>
 						<td>{record.counterName}</td>
 						<td>{record.month} {record.year}</td>

@@ -3,6 +3,7 @@
 	import {fetchAppConfig, fetchMailTemplate, sendCounterData} from "$lib/api";
 	import {AppConfig, Counter, Location} from "$lib/config";
 	import {onMount} from "svelte";
+	import {getMonthName} from "$lib/period";
 
 	export let data: PageData;
 
@@ -155,10 +156,6 @@
 		const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
 		customPeriodValue = `${now.getFullYear()}-${month}`;
 		return getMonthName(now, data.config.locale.language)
-	}
-
-	function getMonthName(date: Date, lang: string): string {
-		return date.toLocaleString(lang,{month:'long'});
 	}
 
 	function onSelectPreviousMonth() {
