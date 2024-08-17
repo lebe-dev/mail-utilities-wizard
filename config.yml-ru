@@ -42,35 +42,6 @@ defaults:
   mail-body-template-file: 'example.txt'
   signature: 'Евгений Лебедев'
 
-page:
-  locale: 'ru'
-  title: 'Отправка показания счётчиков | Mail Utilities Wizard'
-  header: 'Отправка показания счётчиков'
-  select-location-label: 'Выбрать адрес:'
-  select-location-dropdown: '- Выбрать -'
-  select-counter-label: 'Выбрать счётчик:'
-  select-counter-dropdown: '- Выбрать -'
-  account-id-label: 'Лицевой счёт:'
-  account-id-hint: 'Уникальное значение для каждого счётчика'
-  email-label: 'Данные будут отправлены на адрес:'
-  period-label: 'Период:'
-  counter-value-label: 'Значение счётчика:'
-  mail-template-title: 'Как будет выглядеть письмо'
-  mail-template-to-label: 'Кому:'
-  mail-template-subject-label: 'Тема:'
-  mail-template-body-label: 'Текст:'
-  mail-template-close-button: 'Закрыть'
-
-  send-confirm-msg: 'Отправить?'
-  send-button: 'Отправить'
-  send-more-button: 'Отправить ещё'
-  show-letter-button: 'Предпросмотр письма'
-  back-button: 'Вернуться назад'
-  app-error-msg: 'Ошибка приложения'
-  sending-msg: 'Отправка..'
-  send-success-msg: 'Показания счётчика успешно отправлены'
-  send-error-msg: 'Ошибка отправки, свяжитесь с ivan@petrov.ru'
-
 mail:
   from: eugene@mail.com
   host: localhost

@@ -1,0 +1,42 @@
+locale:
+  language: 'en'
+  title: 'Mail Utilities Wizard'
+  header: 'Send utilities data'
+  app-error-msg: 'Application error'
+
+  # Send page
+  select-location-label: 'Select location:'
+  select-location-dropdown: '- Select -'
+  select-counter-label: 'Select counter:'
+  select-counter-dropdown: '- Select -'
+  account-id-label: 'Your account id:'
+  account-id-hint: 'Unique for each counter'
+  email-label: 'Data will be sent to e-mail:'
+  period-label: 'Period:'
+  counter-value-label: 'Counter value:'
+  send-confirm-msg: 'Do you want to continue?'
+  sending-msg: 'Sending..'
+  send-button: 'Send'
+  show-letter-button: 'Show the letter'
+  back-button: 'Back'
+  send-error-msg: 'Unable to send counter data, contact john@company.com'
+
+  # Mail preview
+  mail-template-title: 'Letter'
+  mail-template-to-label: 'To:'
+  mail-template-subject-label: 'Subject:'
+  mail-template-body-label: 'Body:'
+  mail-template-close-button: 'Close'
+
+  # History table data
+  history-table-text: 'History for previous periods:'
+  history-record-date: 'Date:'
+  history-record-values: 'Values:'
+  history-record-location: 'Location:'
+  history-record-counter: 'Counter:'
+  history-record-period: 'Period:'
+  history-record-value: 'Value:'
+
+  # Success page
+  send-success-msg: 'Counter value has been sent'
+  send-more-button: 'Send more'

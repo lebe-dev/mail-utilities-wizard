@@ -1,16 +1,30 @@
 export class AppConfig {
-    page: PageConfig = new PageConfig();
+    locale: LocaleConfig = new LocaleConfig();
 
     locations: Location[] = [];
 
     historyRecords: HistoryRecord[] = [];
 }
 
-export class PageConfig {
+export class LocaleConfig {
+    // COMMON
+    language: string = '';
     title: string = '';
     header: string = '';
 
-    locale: string = '';
+    appErrorMsg: string = '';
+
+    // MAIN PAGE
+
+    historyTableText: string = '';
+    historyRecordDate: string = '';
+    historyRecordValues: string = '';
+    historyRecordCounter: string = '';
+    historyRecordLocation: string = '';
+    historyRecordPeriod: string = '';
+    historyRecordValue: string = '';
+
+    // SEND PAGE
 
     selectLocationLabel: string = '';
     selectLocationDropdown: string = '';
@@ -39,12 +53,13 @@ export class PageConfig {
     showLetterButton: string = '';
     backButton: string = '';
 
-    sendMoreButton: string = '';
-
-    appErrorMsg: string = '';
     sendingMsg: string = '';
-    sendSuccessMsg: string = '';
     sendErrorMsg: string = '';
+
+    // SEND SUCCESS PAGE
+
+    sendSuccessMsg: string = '';
+    sendMoreButton: string = '';
 }
 
 export class Location {

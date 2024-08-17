@@ -1,0 +1,43 @@
+locale:
+    language: 'ru'
+    title: 'Отправка показания счётчиков | Mail Utilities Wizard'
+    header: 'Отправка показания счётчиков'
+    app-error-msg: 'Ошибка приложения'
+
+    # Главная страница
+    history-table-text: 'Показания за предыдущие периоды:'
+    history-record-date: 'Дата:'
+    history-record-values: 'Показания:'
+    history-record-location: 'Адрес:'
+    history-record-counter: 'Счётчик:'
+    history-record-period: 'Период:'
+    history-record-value: 'Значение:'
+
+    # Страница отправки показаний
+    select-location-label: 'Выбрать адрес:'
+    select-location-dropdown: '- Выбрать -'
+    select-counter-label: 'Выбрать счётчик:'
+    select-counter-dropdown: '- Выбрать -'
+    account-id-label: 'Лицевой счёт:'
+    account-id-hint: 'Уникальное значение для каждого счётчика'
+    email-label: 'Данные будут отправлены на адрес:'
+    period-label: 'Период:'
+    counter-value-label: 'Значение счётчика:'
+    mail-template-title: 'Как будет выглядеть письмо'
+    mail-template-to-label: 'Кому:'
+    mail-template-subject-label: 'Тема:'
+    mail-template-body-label: 'Текст:'
+    mail-template-close-button: 'Закрыть'
+
+    send-confirm-msg: 'Отправить?'
+    send-button: 'Отправить'
+
+    show-letter-button: 'Предпросмотр письма'
+    back-button: 'Вернуться назад'
+
+    sending-msg: 'Отправка..'
+    send-error-msg: 'Ошибка отправки, свяжитесь с ivan@petrov.ru'
+
+    # Страница сообщения об успешной отправке
+    send-success-msg: 'Показания счётчика успешно отправлены'
+    send-more-button: 'Отправить ещё'

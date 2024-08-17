@@ -19,8 +19,9 @@ chmod -R 777 logs
 
 # Put your mail template into `templates` folder
 
-# Prepare config file
+# Prepare config files
 cp config.yml-dist config.yml
+cp locale.yml-dist locale.yml
 
 # Edit config.yml
 

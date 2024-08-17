@@ -3,6 +3,7 @@
 /*.iml
 /.idea
 /config.yml
+/locale.yml
 /logs
 /data
 /muw.db

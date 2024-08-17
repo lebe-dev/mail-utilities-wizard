@@ -35,35 +35,6 @@ defaults:
   mail-body-template-file: 'example.txt'
   signature: 'Evgeny Lebedev'
 
-page:
-  locale: 'en'
-  title: 'Mail Utilities Wizard'
-  header: 'Send utilities data'
-  select-location-label: 'Select location:'
-  select-location-dropdown: '- Select -'
-  select-counter-label: 'Select counter:'
-  select-counter-dropdown: '- Select -'
-  account-id-label: 'Your account id:'
-  account-id-hint: 'Unique for each counter'
-  email-label: 'Data will be sent to e-mail:'
-  period-label: 'Period:'
-  counter-value-label: 'Counter value:'
-  mail-template-title: 'Letter'
-  mail-template-to-label: 'To:'
-  mail-template-subject-label: 'Subject:'
-  mail-template-body-label: 'Body:'
-  mail-template-close-button: 'Close'
-
-  send-confirm-msg: 'Do you want to continue?'
-  send-button: 'Send'
-  send-more-button: 'Send more'
-  show-letter-button: 'Show the letter'
-  back-button: 'Back'
-  app-error-msg: 'Application error'
-  sending-msg: 'Sending..'
-  send-success-msg: 'Counter value has been sent'
-  send-error-msg: 'Unable to send counter data, contact john@company.com'
-
 mail:
   from: eugene@mail.com
   host: smtp.host.com

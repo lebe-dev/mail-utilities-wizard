@@ -38,8 +38,8 @@ pub struct AppState {
 
 #[tokio::main]
 async fn main() {
-    let config = loading_config_from_file("config.yml")
-                                        .expect("unable to load config");
+    let config = loading_config_from_file(
+        "config.yml", "locale.yml").expect("unable to load config");
 
     let logging_config = get_logging_config(&config.clone().log_level);
 

@@ -9,11 +9,12 @@ use crate::config::counter::Counter;
 use crate::config::location::Location;
 use crate::config::AppConfig;
 
-pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppConfig> {
-    info!("loading config from file '{config_file_path}'");
+pub fn loading_config_from_file(config_file_path: &str, locale_file_path: &str) -> anyhow::Result<AppConfig> {
+    info!("loading config from files: '{config_file_path}', {locale_file_path}");
 
     let settings = Config::builder()
         .add_source(config::File::with_name(config_file_path))
+        .add_source(config::File::with_name(locale_file_path))
         .build()?;
 
     let loaded_config = settings.try_deserialize::<AppConfig>()?;
@@ -77,7 +78,7 @@ pub fn loading_config_from_file(config_file_path: &str) -> anyhow::Result<AppCon
         log_level: loaded_config.log_level,
         locations,
         defaults: loaded_config.defaults,
-        page: loaded_config.page,
+        locale: loaded_config.locale,
         mail: loaded_config.mail
     };
 
@@ -98,16 +99,18 @@ mod tests {
     use crate::config::counter::Counter;
     use crate::config::defaults::DefaultsConfig;
     use crate::config::file::loading_config_from_file;
+    use crate::config::locale::LocaleConfig;
     use crate::config::location::Location;
     use crate::config::mail::MailConfig;
-    use crate::config::page::PageConfig;
     use crate::config::AppConfig;
 
     #[test]
     fn config_load() {
         let config_file = Path::new("test-data").join("test-config.yml");
         let config_file = format!("{}", config_file.display());
-        let result_config = loading_config_from_file(&config_file).unwrap();
+        let locale_file = Path::new("test-data").join("test-locale.yml");
+        let locale_file = format!("{}", locale_file.display());
+        let result_config = loading_config_from_file(&config_file, &locale_file).unwrap();
 
         let expected_config = AppConfig {
             bind: NonBlankString::from_str("127.0.0.1:8080").unwrap(),
@@ -148,8 +151,8 @@ mod tests {
                 mail_body_template_file: NonBlankString::from_str("example.txt").unwrap(),
                 signature: NonBlankString::from_str("Evgeny Lebedev").unwrap(),
             },
-            page: PageConfig {
-                locale: NonBlankString::from_str("en").unwrap(),
+            locale: LocaleConfig {
+                language: NonBlankString::from_str("en").unwrap(),
 
                 title: NonBlankString::from_str("Mail Utilities Wizard").unwrap(),
                 header: NonBlankString::from_str("Send utilities data").unwrap(),
@@ -182,7 +185,17 @@ mod tests {
                 send_more_button: NonBlankString::from_str("Send more").unwrap(),
                 back_button: NonBlankString::from_str("Back").unwrap(),
 
+
+
                 app_error_msg: NonBlankString::from_str("Application error").unwrap(),
+
+                history_table_text: NonBlankString::from_str("History for previous periods:").unwrap(),
+                history_record_date: NonBlankString::from_str("Date:").unwrap(),
+                history_record_values: NonBlankString::from_str("Values:").unwrap(),
+                history_record_counter: NonBlankString::from_str("Counter:").unwrap(),
+                history_record_location: NonBlankString::from_str("Location:").unwrap(),
+                history_record_period: NonBlankString::from_str("Period:").unwrap(),
+                history_record_value: NonBlankString::from_str("Value:").unwrap(),
 
                 sending_msg: NonBlankString::from_str("Sending..").unwrap(),
                 send_success_msg: NonBlankString::from_str("Counter value has been sent").unwrap(),

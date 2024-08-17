@@ -29,16 +29,16 @@
 </script>
 
 <svelte:head>
-    <title>{data.config.page.title}</title>
+    <title>{data.config.locale.title}</title>
     <meta name="description" content="Mail Utilities Wizard" />
 </svelte:head>
 
 <section class="bg-white container rounded mt-1 pt-3 ps-4 pe-4 pb-4">
     {#if !pageLoading}
-        <h3 class="mb-4">{data.config.page.sendSuccessMsg}</h3>
+        <h3 class="mb-4">{data.config.locale.sendSuccessMsg}</h3>
         <div>
             <hr>
-            <a class="btn btn-outline-primary" href="/">{data.config.page.sendMoreButton}</a>
+            <a class="btn btn-outline-primary" href="/">{data.config.locale.sendMoreButton}</a>
         </div>
 
     {:else if unexpectedError}

@@ -14,7 +14,7 @@ pub async fn get_config_route(State(state): State<Arc<AppState>>) -> impl IntoRe
     match find_history_records(&state.db_pool).await {
         Ok(history_records) => {
             let config = AppConfigDto {
-                page: state.config.page.clone(),
+                locale: state.config.locale.clone(),
                 locations: state.config.locations.clone(),
                 history_records
             };
