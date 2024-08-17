@@ -2,7 +2,7 @@ Hello,
 
 My account id is 92358457293485.
 
-This is Electricity counter for location Saint Petersburg, Nevsky Street, 123 for July.
+This is Electricity counter for location Saint Petersburg, Nevsky Street, 123 for July 2024.
 
 Value is 123.
 

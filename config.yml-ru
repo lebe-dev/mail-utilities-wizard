@@ -38,7 +38,7 @@ locations:
 defaults:
   # Кому отправлять копию письма
   email-copy: 'me@mail.com'
-  mail-subject-template: 'Counter {{ counter_name }} data for {{ month }}'
+  mail-subject-template: 'Counter {{ counter_name }} data for {{ month }} {{ year }}'
   mail-body-template-file: 'example.txt'
   signature: 'Evgeny Lebedev'
 

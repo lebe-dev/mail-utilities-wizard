@@ -9,13 +9,15 @@ pub const LOCATION_NAME_TEMPLATE_VAR: &str = "location";
 pub const COUNTER_NAME_TEMPLATE_VAR: &str = "counter_name";
 pub const COUNTER_ACCOUNT_ID_TEMPLATE_VAR: &str = "account_id";
 pub const COUNTER_VALUE_TEMPLATE_VAR: &str = "counter_value";
+pub const YEAR_TEMPLATE_VAR: &str = "year";
 pub const MONTH_TEMPLATE_VAR: &str = "month";
 pub const SIGNATURE_TEMPLATE_VAR: &str = "signature";
 
-pub fn get_template_vars(location_name: &str, month: &str, counter: &Counter,
+pub fn get_template_vars(location_name: &str, year: u16, month: &str, counter: &Counter,
                          counter_value: &str) -> HashMap<String,String> {
     HashMap::from([
         (LOCATION_NAME_TEMPLATE_VAR.to_string(), location_name.to_string()),
+        (YEAR_TEMPLATE_VAR.to_string(), year.to_string()),
         (MONTH_TEMPLATE_VAR.to_string(), month.to_string()),
         (COUNTER_NAME_TEMPLATE_VAR.to_string(), counter.name.to_string()),
         (COUNTER_ACCOUNT_ID_TEMPLATE_VAR.to_string(), counter.account_id.to_string()),
@@ -98,7 +100,7 @@ mod tests {
             signature: "Evgeny Lebedev".to_string(),
         };
 
-        let vars = get_template_vars("Saint Petersburg, Nevsky Street, 123", "July", &counter, "123");
+        let vars = get_template_vars("Saint Petersburg, Nevsky Street, 123", 2024, "July", &counter, "123");
 
         let result_template = render_mail_body_template(&template_file_path, &vars).unwrap();
 

@@ -30,7 +30,7 @@ pub async fn send_counter_data_route(State(state): State<Arc<AppState>>,
             match counter {
                 Some(counter) => {
                     let template_vars = get_template_vars(
-                        &location.name, &request.month, &counter, &request.counter_value
+                        &location.name, request.year, &request.month, &counter, &request.counter_value
                     );
 
                     let template_file = Path::new("templates").join(&counter.mail_body_template_file);
