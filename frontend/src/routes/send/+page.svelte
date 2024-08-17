@@ -316,15 +316,16 @@
 					<div class="mb-3">
 						<div class="mb-3">{data.config.page.periodLabel} {periodValue}</div>
 
-						<div class="btn-group" role="group" aria-label="Select period">
+						<div class="btn-group mb-3" role="group" aria-label="Select period">
 							<button type="button" on:click={onSelectPreviousMonth} disabled={counterDataSending}
 									class={periodValue === getPreviousMonth() ? 'btn btn-outline-secondary active' : 'btn btn-outline-secondary'}>{getPreviousMonth()}</button>
 							<button type="button" on:click={onSelectCurrentMonth} disabled={counterDataSending}
 									class={periodValue === getCurrentMonth() ? 'btn btn-outline-secondary active rounded-end me-3' : 'btn btn-outline-secondary rounded-end me-3'}>{getCurrentMonth()}</button>
-							<input id="period-value" type="month" bind:value={customPeriodValue} disabled={counterDataSending}
-								   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'form-control border-secondary' : 'form-control'}
-								   on:change={onPeriodValueUpdate}>
 						</div>
+
+						<input id="period-value" type="month" bind:value={customPeriodValue} disabled={counterDataSending}
+							   class={periodValue !== getCurrentMonth() && periodValue !== getPreviousMonth() ? 'inline-block form-control border-secondary' : 'form-control inline-block '}
+							   on:change={onPeriodValueUpdate}>
 					</div>
 
 					{#if isPeriodSelected()}
@@ -343,8 +344,8 @@
 						<div>
 							{#if !counterDataSending}
 								<div class="row">
-									<div class="col-6">
-										<button class="btn btn-primary me-3" type="button" on:click={onSend}
+									<div class="col col-lg-6">
+										<button class="btn btn-primary me-3 mb-3" type="button" on:click={onSend}
 												disabled={!formValid}>{data.config.page.sendButton}</button>
 
 										<button type="button" class="btn btn-light" data-bs-toggle="modal"
@@ -353,7 +354,7 @@
 											{data.config.page.showLetterButton}
 										</button>
 									</div>
-									<div class="col-6 text-end">
+									<div class="col col-lg-6 text-end">
 										<a class="btn btn-light" href="/">{data.config.page.backButton}</a>
 									</div>
 								</div>
