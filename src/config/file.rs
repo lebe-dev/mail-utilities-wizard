@@ -178,14 +178,14 @@ mod tests {
                 mail_template_body_label: NonBlankString::from_str("Body:").unwrap(),
                 mail_template_close_button: NonBlankString::from_str("Close").unwrap(),
 
+                already_sent_warn_msg: NonBlankString::from_str("Data for this meter has already been sent for the selected period.").unwrap(),
+
                 send_confirm_msg: NonBlankString::from_str("Do you want to continue?").unwrap(),
 
                 send_button: NonBlankString::from_str("Send").unwrap(),
                 show_letter_button: NonBlankString::from_str("Show the letter").unwrap(),
                 send_more_button: NonBlankString::from_str("Send more").unwrap(),
                 back_button: NonBlankString::from_str("Back").unwrap(),
-
-
 
                 app_error_msg: NonBlankString::from_str("Application error").unwrap(),
 

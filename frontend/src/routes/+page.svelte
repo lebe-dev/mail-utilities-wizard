@@ -35,10 +35,10 @@
 		})
 	}
 
-	function getHumanDate(timestamp: number): string {
+	function getHumanDateTime(timestamp: number): string {
 		console.log(timestamp);
 		const date = new Date(timestamp * 1000);
-		return `${date.getDate()} ${getMonthName(date, data.config.locale.language)} ${date.getFullYear()}`;
+		return `${date.getDate()} ${getMonthName(date, data.config.locale.language)} ${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
 	}
 </script>
 
@@ -75,7 +75,7 @@
 				<tbody>
 				{#each data.config.historyRecords as record}
 					<tr>
-						<td class="text-size-mobile">{getHumanDate(record.created)}</td>
+						<td class="text-size-mobile">{getHumanDateTime(record.created)}</td>
 						<td class="text-size-mobile">
 							<div><strong>{data.config.locale.historyRecordLocation}</strong></div>
 							<div>{record.location}</div>
@@ -105,7 +105,7 @@
 				<tbody>
 				{#each data.config.historyRecords as record}
 					<tr>
-						<td>{getHumanDate(record.created)}</td>
+						<td>{getHumanDateTime(record.created)}</td>
 						<td>{record.location}</td>
 						<td>{record.counterName}</td>
 						<td>{record.month} {record.year}</td>

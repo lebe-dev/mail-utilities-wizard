@@ -47,6 +47,8 @@ export class LocaleConfig {
     mailTemplateBodyLabel: string = '';
     mailTemplateCloseButton: string = '';
 
+    alreadySentWarnMsg: string = '';
+
     sendConfirmMsg: string = '';
     sendButton: string = '';
 

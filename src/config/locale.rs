@@ -83,6 +83,9 @@ pub struct LocaleConfig {
     #[serde(alias = "send-confirm-msg", alias = "sendConfirmMsg")]
     pub send_confirm_msg: NonBlankString,
 
+    #[serde(alias = "already-sent-warn-msg", alias = "alreadySentWarnMsg")]
+    pub already_sent_warn_msg: NonBlankString,
+
     #[serde(alias = "send-button", alias = "sendButton")]
     pub send_button: NonBlankString,
 

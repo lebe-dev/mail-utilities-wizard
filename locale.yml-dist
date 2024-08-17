@@ -21,6 +21,8 @@ locale:
   back-button: 'Back'
   send-error-msg: 'Unable to send counter data, contact john@company.com'
 
+  already-sent-warn-msg: "Data for this meter has already been sent for the selected period."
+
   # Mail preview
   mail-template-title: 'Letter'
   mail-template-to-label: 'To:'

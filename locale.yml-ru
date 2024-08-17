@@ -29,6 +29,8 @@ locale:
     mail-template-body-label: 'Текст:'
     mail-template-close-button: 'Закрыть'
 
+    already-sent-warn-msg: 'Вы уже отправляли данные по данному счётчику за выбранный период'
+
     send-confirm-msg: 'Отправить?'
     send-button: 'Отправить'
 

@@ -15,6 +15,7 @@ use std::sync::Arc;
 pub struct CheckRequest {
     pub email: Email,
     pub account_id: NonBlankString,
+    pub year: u16,
     pub month: NonBlankString,
 }
 
@@ -37,7 +38,7 @@ pub async fn check_if_already_sent_route(State(state): State<Arc<AppState>>,
            info!("counter has been found: {:?}", counter);
 
            match find_history_record(&state.db_pool, &counter.name,
-                                     &request.account_id, &request.month).await {
+                                     &request.account_id, request.year, &request.month).await {
                Ok(history_record) => {
                    match history_record {
                        Some(_) => {

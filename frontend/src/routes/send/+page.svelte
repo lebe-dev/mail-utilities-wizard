@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type {PageData} from "./$types";
-	import {fetchAppConfig, fetchMailTemplate, sendCounterData} from "$lib/api";
+	import {checkIfCounterDataAlreadySent, fetchAppConfig, fetchMailTemplate, sendCounterData} from "$lib/api";
 	import {AppConfig, Counter, Location} from "$lib/config";
 	import {onMount} from "svelte";
 	import {getMonthName} from "$lib/period";
@@ -30,6 +30,8 @@
 	let mailTemplateSubject: string = '';
 	let mailTemplateBody: string = '';
 
+	let showAlreadySentWarning = false;
+
 	let formValid: boolean = false;
 
 	onMount(async () => {
@@ -38,6 +40,7 @@
 
 	function loadConfig() {
 		pageLoading = true;
+
 		fetchAppConfig().then((config: AppConfig) => {
 			console.log('config:', config);
 			data.config = config;
@@ -65,6 +68,8 @@
 	}
 
 	function onSelectLocation(e: any) {
+		showAlreadySentWarning = false;
+
 		let value = e.target?.value;
 
 		if (value !== undefined) {
@@ -93,7 +98,8 @@
 	}
 
 	function onSelectCounter(e: any) {
-		console.log('onSelectCounter', e);
+		showAlreadySentWarning = false;
+
 		let value = e.target?.value;
 
 		if (value !== undefined) {
@@ -103,6 +109,8 @@
 				console.log('counter:', counter.name);
 				currentCounter = counter;
 				currentCounterName = counter.name;
+
+				checkForAlreadySentData();
 
 			} else {
 				currentCounter = new Counter();
@@ -137,8 +145,22 @@
 
 			periodValue = getMonthName(date, data.config.locale.language);
 			console.log('period value:', customPeriodValue);
+
+			checkForAlreadySentData();
+
 			isFormValid();
 		}
+	}
+
+	function checkForAlreadySentData() {
+		checkIfCounterDataAlreadySent(currentCounter.email, currentCounter.accountId, year.toString(), periodValue).then((check) => {
+			console.log('check:', check);
+			showAlreadySentWarning = check.exist;
+
+		}).catch(() => {
+			pageLoading = false;
+			unexpectedError = true;
+		})
 	}
 
 	function getPreviousMonth(): string {
@@ -160,10 +182,12 @@
 
 	function onSelectPreviousMonth() {
 		periodValue = getPreviousMonth();
+		checkForAlreadySentData();
 	}
 
 	function onSelectCurrentMonth() {
 		periodValue = getCurrentMonth();
+		checkForAlreadySentData();
 	}
 
 	function onCounterValueUpdate(e: any) {
@@ -364,6 +388,10 @@
 
 											<div class="d-inline-block">{data.config.locale.sendButton}</div>
 										</button>
+
+										{#if showAlreadySentWarning}
+											<div id="already-sent-warning" class="mt-2">{data.config.locale.alreadySentWarnMsg}</div>
+										{/if}
 									</div>
 									<div class="col col-lg-4 text-end">
 										<a class="btn btn-light back-btn d-inline-block vertical-align" href="/">
@@ -433,6 +461,12 @@
 
 	.btn {
 		min-width: 150px;
+	}
+
+	#already-sent-warning {
+		font-size: 0.85rem;
+
+		color: #ff8747;
 	}
 
 	.vertical-align {

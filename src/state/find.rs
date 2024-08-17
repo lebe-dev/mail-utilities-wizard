@@ -4,12 +4,13 @@ use sqlx::sqlite::SqliteRow;
 use sqlx::{Error, Pool, Row, Sqlite};
 
 pub async fn find_history_record(pool: &Pool<Sqlite>, counter_name: &str,
-                                 account_id: &str, month: &str) -> Result<Option<HistoryRecord>, Error> {
+                 account_id: &str, year: u16, month: &str) -> Result<Option<HistoryRecord>, Error> {
     let select_query = sqlx::query(
-        "SELECT * FROM history WHERE counter_name = $1, account_id = $2, month = $3");
+        "SELECT * FROM history WHERE counter_name = $1 and account_id = $2 and year = $3 and month = $4");
     let result: Option<HistoryRecord> = select_query
         .bind(&counter_name)
         .bind(&account_id)
+        .bind(&year)
         .bind(&month)
         .map(|row: SqliteRow| get_history_record_from_row(&row))
         .fetch_optional(pool)
@@ -49,7 +50,7 @@ fn get_history_record_from_row(row: &SqliteRow) -> HistoryRecord {
 
 #[cfg(test)]
 mod tests {
-    use crate::state::find::find_history_records;
+    use crate::state::find::{find_history_record, find_history_records};
     use crate::state::history::{insert_history_record, HistoryRecord};
     use crate::state::remove::remove_history_record;
     use crate::tests::state::prepare_test_memory_db;
@@ -77,6 +78,12 @@ mod tests {
 
         entities_are_equal_except_id(&record1, result1);
         entities_are_equal_except_id(&record2, result2);
+
+        //
+
+        let result = find_history_record(&pool, &record1.counter_name, &record1.account_id, record1.year, &record1.month).await.unwrap().unwrap();
+
+        assert_eq!(result1, &result);
 
         //
 
