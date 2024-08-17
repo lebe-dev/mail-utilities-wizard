@@ -1,7 +1,10 @@
 # In case of running the app without docker please use 127.0.0.1:8080
 bind: '0.0.0.0:8080'
 
-db-cnn: 'sqlite://app.db?mode=rwc'
+# Docker:
+db-cnn: 'sqlite:///app/data/app.db?mode=rwc'
+
+# db-cnn: 'sqlite://app.db?mode=rwc'
 
 log-level: info
 
