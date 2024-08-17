@@ -6,19 +6,19 @@ A tiny web-service that helps send meter readings to utility companies.
 
 Main page with history data:
 
-![Web-сервис для отправки показаний счётчиков по почте](docs/ru/history.png)
+![Web-сервис для отправки показаний счётчиков по почте](docs/en/history.png)
 
 Send page:
 
-![Web-сервис для отправки показаний счётчиков по почте](docs/ru/send.png)
+![Web-сервис для отправки показаний счётчиков по почте](docs/en/send.png)
 
 Letter preview:
 
-![Пример предпросмотра письма в интерфейсе приложения](docs/ru/letter-preview.png)
+![Пример предпросмотра письма в интерфейсе приложения](docs/en/letter-preview.png)
 
 If company doesn't support direct mail send you can show a proper link and short manual:
 
-![Ссылка на сайт компании для отправки показаний](docs/ru/unsupported-counters.png)
+![Ссылка на сайт компании для отправки показаний](docs/en/unsupported-counters.png)
 
 ## My story
 
