@@ -5,15 +5,18 @@ use std::sync::Arc;
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
+use chrono::Local;
 use email_type_rs::email::Email;
 use log::{error, info};
 use non_blank_string_rs::NonBlankString;
 
-use crate::AppState;
 use crate::mail::{MailSend, SmtpMailSender};
 use crate::route::mail::CounterData;
+use crate::state::history::{insert_history_record, HistoryRecord};
 use crate::template::{get_template_vars, render_mail_body_template, render_mail_subject_template};
+use crate::AppState;
 
+// TODO: code refactoring
 pub async fn send_counter_data_route(State(state): State<Arc<AppState>>,
                                      Json(request): Json<CounterData>) -> StatusCode {
     let location = state.config.locations.iter()
@@ -51,7 +54,24 @@ pub async fn send_counter_data_route(State(state): State<Arc<AppState>>,
                                         &NonBlankString::from_str(&mail_body).unwrap()
                                     ) {
                                         Ok(_) => {
-                                            info!("counter data has been sent");
+                                            let now = Local::now().timestamp();
+
+                                            match insert_history_record(
+                                                &state.db_pool,
+                                                &HistoryRecord {
+                                                    id: 0,
+                                                    location: location.name.to_string(),
+                                                    account_id: counter.account_id.to_string(),
+                                                    counter_name: counter.name.to_string(),
+                                                    month: request.month.to_string(),
+                                                    year: request.year,
+                                                    value: request.counter_value.to_string(),
+                                                    created: now,
+                                                }).await {
+                                                Ok(_) => info!("counter data has been sent"),
+                                                Err(e) => error!("unable to save history record: {}", e)
+                                            }
+
                                             StatusCode::OK
                                         }
                                         Err(e) => {

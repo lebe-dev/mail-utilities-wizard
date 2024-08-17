@@ -13,8 +13,9 @@ export async function fetchAppConfig(): Promise<AppConfig> {
     }
 }
 
-export async function fetchMailTemplate(locationName: string, counterName: string, month: string, counterValue: string): Promise<MailTemplateResponse> {
-    const counterData = new CounterData(locationName, counterName, month, counterValue);
+export async function fetchMailTemplate(locationName: string, counterName: string, year: number,
+                                        month: string, counterValue: string): Promise<MailTemplateResponse> {
+    const counterData = new CounterData(locationName, counterName, year, month, counterValue);
 
     const response = await fetch('/api/mail/template', {
         method: 'POST',
@@ -32,8 +33,9 @@ export async function fetchMailTemplate(locationName: string, counterName: strin
     }
 }
 
-export async function sendCounterData(locationName: string, counterName: string, month: string, counterValue: string): Promise<string> {
-    const report = new CounterData(locationName, counterName, month, counterValue);
+export async function sendCounterData(locationName: string, counterName: string, year: number,
+                                      month: string, counterValue: string): Promise<string> {
+    const report = new CounterData(locationName, counterName, year, month, counterValue);
 
     const response = await fetch('/api/counter', {
         method: 'POST',
@@ -57,14 +59,16 @@ export class MailTemplateResponse {
 }
 
 export class CounterData {
-    constructor(locationName: string, counterName: string, month: string, counterValue: string) {
+    constructor(locationName: string, counterName: string, year: number, month: string, counterValue: string) {
         this.locationName = locationName;
         this.counterName = counterName;
+        this.year = year;
         this.month = month;
         this.counterValue = counterValue;
     }
     locationName: string;
     counterName: string;
+    year: number;
     month: string;
     counterValue: string;
 }

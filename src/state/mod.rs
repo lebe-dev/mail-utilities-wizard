@@ -27,8 +27,7 @@ CREATE TABLE IF NOT EXISTS history (
   month VARCHAR,
   year INTEGER,
   value VARCHAR,
-  created INTEGER,
-  UNIQUE(counter_name, month, year)
+  created INTEGER
 );"#,
     ).execute(pool)
         .await?;

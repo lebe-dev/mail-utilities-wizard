@@ -8,9 +8,9 @@ use log::error;
 use non_blank_string_rs::NonBlankString;
 use serde::Deserialize;
 
-use crate::AppState;
 use crate::route::dto::MailTemplateDto;
 use crate::template::{get_template_vars, render_mail_body_template, render_mail_subject_template};
+use crate::AppState;
 
 pub async fn get_mail_template_route(State(state): State<Arc<AppState>>,
                                      Json(request): Json<CounterData>) -> Result<Json<MailTemplateDto>, StatusCode> {
@@ -75,5 +75,6 @@ pub struct CounterData {
     pub location_name: NonBlankString,
     pub counter_name: NonBlankString,
     pub month: NonBlankString,
+    pub year: u16,
     pub counter_value: NonBlankString
 }

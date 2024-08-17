@@ -2,6 +2,8 @@ export class AppConfig {
     page: PageConfig = new PageConfig();
 
     locations: Location[] = [];
+
+    historyRecords: HistoryRecord[] = [];
 }
 
 export class PageConfig {
@@ -55,4 +57,15 @@ export class Counter {
     email: string = '';
     url: string = '';
     manual: string = '';
+}
+
+export class HistoryRecord {
+    id: number = 0;
+    location: string = '';
+    accountId: string = '';
+    counterName: string = '';
+    month: string = '';
+    year: number = 0;
+    value: string = '';
+    created: number = 0;
 }
