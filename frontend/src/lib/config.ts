@@ -14,6 +14,12 @@ export class LocaleConfig {
 
     appErrorMsg: string = '';
 
+    // LOGIN PAGE
+
+    loginText: string = '';
+    loginButton: string = '';
+    loginErrorMsg: string = '';
+
     // MAIN PAGE
 
     historyTableText: string = '';

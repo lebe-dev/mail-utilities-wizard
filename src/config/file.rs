@@ -5,6 +5,7 @@ use config::Config;
 use email_type_rs::email::Email;
 use log::info;
 
+use crate::config::auth::AuthConfig;
 use crate::config::counter::Counter;
 use crate::config::location::Location;
 use crate::config::AppConfig;
@@ -76,6 +77,11 @@ pub fn loading_config_from_file(config_file_path: &str, locale_file_path: &str) 
         bind: loaded_config.bind,
         db_cnn: loaded_config.db_cnn,
         log_level: loaded_config.log_level,
+        auth: AuthConfig {
+            enabled: loaded_config.auth.enabled,
+            password: loaded_config.auth.password,
+            secret: loaded_config.auth.secret,
+        },
         locations,
         defaults: loaded_config.defaults,
         locale: loaded_config.locale,
@@ -94,8 +100,8 @@ mod tests {
     use std::str::FromStr;
 
     use email_type_rs::email::Email;
-    use non_blank_string_rs::NonBlankString;
 
+    use crate::config::auth::AuthConfig;
     use crate::config::counter::Counter;
     use crate::config::defaults::DefaultsConfig;
     use crate::config::file::loading_config_from_file;
@@ -113,16 +119,21 @@ mod tests {
         let result_config = loading_config_from_file(&config_file, &locale_file).unwrap();
 
         let expected_config = AppConfig {
-            bind: NonBlankString::from_str("127.0.0.1:8080").unwrap(),
-            db_cnn: NonBlankString::from_str("sqlite://app.db?mode=rwc").unwrap(),
-            log_level: NonBlankString::from_str("debug").unwrap(),
+            bind: "127.0.0.1:8080".parse().unwrap(),
+            db_cnn: "sqlite://app.db?mode=rwc".parse().unwrap(),
+            log_level: "debug".parse().unwrap(),
+            auth: AuthConfig {
+                enabled: true,
+                password: "h246346rGw3g545".parse().unwrap(),
+                secret: "23FS0932fdfSD".parse().unwrap(),
+            },
             locations: vec![
                 Location {
-                    name: NonBlankString::from_str("Saint Petersburg, Nevsky Street, 123").unwrap(),
+                    name: "Saint Petersburg, Nevsky Street, 123".parse().unwrap(),
                     counters: vec![
                         Counter {
-                            name: NonBlankString::from_str("Water").unwrap(),
-                            account_id: NonBlankString::from_str("568346545734").unwrap(),
+                            name: "Water".parse().unwrap(),
+                            account_id: "568346545734".parse().unwrap(),
                             email: "water@company2.com".to_string(),
                             email_copy: "relative@mail.com".to_string(),
                             url: "".to_string(),
@@ -132,8 +143,8 @@ mod tests {
                             signature: "Boris Britva".to_string(),
                         },
                         Counter {
-                            name: NonBlankString::from_str("Electricity").unwrap(),
-                            account_id: NonBlankString::from_str("85678463456").unwrap(),
+                            name: "Electricity".parse().unwrap(),
+                            account_id: "85678463456".parse().unwrap(),
                             email: "".to_string(),
                             email_copy: "default@mail.com".to_string(),
                             url: "https://metrics.company.com/population/send-and-pay/?from=main-menu".to_string(),
@@ -147,63 +158,67 @@ mod tests {
             ],
             defaults: DefaultsConfig {
                 email_copy: Email::from_str("default@mail.com").unwrap(),
-                mail_subject_template: NonBlankString::from_str("Counter {{ counter_name }} data for {{ month }}").unwrap(),
-                mail_body_template_file: NonBlankString::from_str("example.txt").unwrap(),
-                signature: NonBlankString::from_str("Evgeny Lebedev").unwrap(),
+                mail_subject_template: "Counter {{ counter_name }} data for {{ month }}".parse().unwrap(),
+                mail_body_template_file: "example.txt".parse().unwrap(),
+                signature: "Evgeny Lebedev".parse().unwrap(),
             },
             locale: LocaleConfig {
-                language: NonBlankString::from_str("en").unwrap(),
+                language: "en".parse().unwrap(),
 
-                title: NonBlankString::from_str("Mail Utilities Wizard").unwrap(),
-                header: NonBlankString::from_str("Send utilities data").unwrap(),
+                title: "Mail Utilities Wizard".parse().unwrap(),
+                header: "Send utilities data".parse().unwrap(),
 
-                select_location_label: NonBlankString::from_str("Select location:").unwrap(),
-                select_location_dropdown: NonBlankString::from_str("- Select -").unwrap(),
+                login_text: "Your password:".parse().unwrap(),
+                login_button: "Enter".parse().unwrap(),
+                login_error_msg: "Invalid password".parse().unwrap(),
 
-                select_counter_label: NonBlankString::from_str("Select counter:").unwrap(),
-                select_counter_dropdown: NonBlankString::from_str("- Select -").unwrap(),
+                select_location_label: "Select location:".parse().unwrap(),
+                select_location_dropdown: "- Select -".parse().unwrap(),
 
-                account_id_label: NonBlankString::from_str("Your account id:").unwrap(),
-                account_id_hint: NonBlankString::from_str("Unique for each counter").unwrap(),
+                select_counter_label: "Select counter:".parse().unwrap(),
+                select_counter_dropdown: "- Select -".parse().unwrap(),
 
-                email_label: NonBlankString::from_str("Data will be sent to e-mail:").unwrap(),
+                account_id_label: "Your account id:".parse().unwrap(),
+                account_id_hint: "Unique for each counter".parse().unwrap(),
 
-                period_label: NonBlankString::from_str("Period:").unwrap(),
+                email_label: "Data will be sent to e-mail:".parse().unwrap(),
 
-                counter_value_label: NonBlankString::from_str("Counter value:").unwrap(),
+                period_label: "Period:".parse().unwrap(),
 
-                mail_template_title: NonBlankString::from_str("Letter").unwrap(),
-                mail_template_to_label: NonBlankString::from_str("To:").unwrap(),
-                mail_template_subject_label: NonBlankString::from_str("Subject:").unwrap(),
-                mail_template_body_label: NonBlankString::from_str("Body:").unwrap(),
-                mail_template_close_button: NonBlankString::from_str("Close").unwrap(),
+                counter_value_label: "Counter value:".parse().unwrap(),
 
-                already_sent_warn_msg: NonBlankString::from_str("Data for this meter has already been sent for the selected period.").unwrap(),
+                mail_template_title: "Letter".parse().unwrap(),
+                mail_template_to_label: "To:".parse().unwrap(),
+                mail_template_subject_label: "Subject:".parse().unwrap(),
+                mail_template_body_label: "Body:".parse().unwrap(),
+                mail_template_close_button: "Close".parse().unwrap(),
 
-                send_confirm_msg: NonBlankString::from_str("Do you want to continue?").unwrap(),
+                already_sent_warn_msg: "Data for this meter has already been sent for the selected period.".parse().unwrap(),
 
-                send_button: NonBlankString::from_str("Send").unwrap(),
-                show_letter_button: NonBlankString::from_str("Show the letter").unwrap(),
-                send_more_button: NonBlankString::from_str("Send more").unwrap(),
-                back_button: NonBlankString::from_str("Back").unwrap(),
+                send_confirm_msg: "Do you want to continue?".parse().unwrap(),
 
-                app_error_msg: NonBlankString::from_str("Application error").unwrap(),
+                send_button: "Send".parse().unwrap(),
+                show_letter_button: "Show the letter".parse().unwrap(),
+                send_more_button: "Send more".parse().unwrap(),
+                back_button: "Back".parse().unwrap(),
 
-                history_table_text: NonBlankString::from_str("History for previous periods:").unwrap(),
-                history_record_date: NonBlankString::from_str("Date:").unwrap(),
-                history_record_values: NonBlankString::from_str("Values:").unwrap(),
-                history_record_counter: NonBlankString::from_str("Counter:").unwrap(),
-                history_record_location: NonBlankString::from_str("Location:").unwrap(),
-                history_record_period: NonBlankString::from_str("Period:").unwrap(),
-                history_record_value: NonBlankString::from_str("Value:").unwrap(),
+                app_error_msg: "Application error".parse().unwrap(),
 
-                sending_msg: NonBlankString::from_str("Sending..").unwrap(),
-                send_success_msg: NonBlankString::from_str("Counter value has been sent").unwrap(),
-                send_error_msg: NonBlankString::from_str("Unable to send counter data, contact john@company.com").unwrap(),
+                history_table_text: "History for previous periods:".parse().unwrap(),
+                history_record_date: "Date:".parse().unwrap(),
+                history_record_values: "Values:".parse().unwrap(),
+                history_record_counter: "Counter:".parse().unwrap(),
+                history_record_location: "Location:".parse().unwrap(),
+                history_record_period: "Period:".parse().unwrap(),
+                history_record_value: "Value:".parse().unwrap(),
+
+                sending_msg: "Sending..".parse().unwrap(),
+                send_success_msg: "Counter value has been sent".parse().unwrap(),
+                send_error_msg: "Unable to send counter data, contact john@company.com".parse().unwrap(),
             },
             mail: MailConfig {
-                from: Email::from_str("eugene@mail.com").unwrap(),
-                host: NonBlankString::from_str("localhost").unwrap(),
+                from: "eugene@mail.com".parse().unwrap(),
+                host: "localhost".parse().unwrap(),
                 port: 1025,
                 username: "change-me".to_string(),
                 password: "change-me".to_string(),

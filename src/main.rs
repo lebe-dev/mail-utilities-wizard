@@ -4,9 +4,10 @@ use crate::config::file::loading_config_from_file;
 use crate::config::AppConfig;
 use crate::logging::get_logging_config;
 use crate::route::check::check_if_already_sent_route;
-use crate::route::config::get_config_route;
+use crate::route::config::{get_config_route, get_locale_config_route};
 use crate::route::counter::send_counter_data_route;
 use crate::route::mail::get_mail_template_route;
+use crate::route::session::get_user_session_route;
 use crate::route::version::get_version_route;
 use crate::state::{create_db_tables, get_db_connection};
 use axum::http::{header, StatusCode, Uri};
@@ -14,6 +15,7 @@ use axum::response::{Html, IntoResponse, Response};
 use axum::{routing::get, routing::post, Router};
 use rust_embed::Embed;
 use sqlx::{Pool, Sqlite};
+use tower_cookies::CookieManagerLayer;
 
 pub mod config;
 
@@ -23,10 +25,12 @@ pub mod state;
 pub mod template;
 pub mod mail;
 
+pub mod auth;
+
 #[cfg(test)]
 pub mod tests;
 
-pub const VERSION: &str = "1.2.0 #UNKNOWN";
+pub const VERSION: &str = "1.3.0 #UNKNOWN";
 
 static INDEX_HTML: &str = "index.html";
 
@@ -57,12 +61,15 @@ async fn main() {
     };
 
     let app = Router::new()
+                        .route("/api/login", post(get_user_session_route))
                         .route("/api/config", get(get_config_route))
+                        .route("/api/config/locale", get(get_locale_config_route))
                         .route("/api/mail/template", post(get_mail_template_route))
                         .route("/api/counter", post(send_counter_data_route))
                         .route("/api/counter/check", post(check_if_already_sent_route))
                         .route("/api/version", get(get_version_route))
                         .fallback(static_handler)
+                        .layer(CookieManagerLayer::new())
                         .with_state(Arc::new(app_state));
 
     let bind = format!("{}", config.bind);

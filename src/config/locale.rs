@@ -10,6 +10,14 @@ pub struct LocaleConfig {
     pub title: NonBlankString,
     pub header: NonBlankString,
 
+    #[serde(alias = "login-text", alias = "loginText")]
+    pub login_text: NonBlankString,
+    #[serde(alias = "login-button", alias = "loginButton")]
+    pub login_button: NonBlankString,
+
+    #[serde(alias = "login-error-msg", alias = "loginErrorMsg")]
+    pub login_error_msg: NonBlankString,
+
     #[serde(alias = "app-error-msg", alias = "appErrorMsg")]
     pub app_error_msg: NonBlankString,
 

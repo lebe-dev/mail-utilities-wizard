@@ -4,6 +4,10 @@ locale:
     header: 'Отправка показания счётчиков'
     app-error-msg: 'Ошибка приложения'
 
+    login-text: 'Ваш пароль:'
+    login-button: 'Войти'
+    login-error-msg: 'Неправильный пароль'
+
     # Главная страница
     history-table-text: 'Показания за предыдущие периоды:'
     history-record-date: 'Дата:'

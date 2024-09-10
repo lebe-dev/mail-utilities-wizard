@@ -4,6 +4,11 @@ db-cnn: 'sqlite://app.db?mode=rwc'
 
 log-level: debug
 
+auth:
+  enabled: true
+  password: 'h246346rGw3g545'
+  secret: '23FS0932fdfSD'
+
 locations:
   - name: 'Saint Petersburg, Nevsky Street, 123'
     counters:

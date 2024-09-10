@@ -9,6 +9,7 @@ use crate::state::history::HistoryRecord;
 pub struct AppConfigDto {
     pub locale: LocaleConfig,
     pub locations: Vec<Location>,
+    pub auth_enabled: bool,
     pub history_records: Vec<HistoryRecord>
 }
 

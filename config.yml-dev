@@ -5,6 +5,14 @@ db-cnn: 'sqlite::memory:'
 
 log-level: debug
 
+auth:
+  enabled: true
+  password: 'test'
+
+  # Use random value
+  # Used by user session (JWT)
+  secret: '23FS0932fdfSD'
+
 locations:
   - name: 'Saint Petersburg, Nevsky Street, 123'
     counters:

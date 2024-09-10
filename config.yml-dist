@@ -6,6 +6,14 @@ db-cnn: 'sqlite:///app/data/app.db?mode=rwc'
 
 # db-cnn: 'sqlite://app.db?mode=rwc'
 
+auth:
+  enabled: true
+  password: 'D3q984SD384j34r9dfF'
+
+  # Use random value
+  # Used by user session (JWT)
+  secret: '23FS0932fdfSD'
+
 log-level: info
 
 locations:

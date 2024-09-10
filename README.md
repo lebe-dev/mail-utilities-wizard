@@ -6,19 +6,19 @@ A tiny web-service that helps send meter readings to utility companies.
 
 Main page with history data:
 
-![Web-сервис для отправки показаний счётчиков по почте](docs/en/history.png)
+![Main page with history data](docs/en/history.png)
 
 Send page:
 
-![Web-сервис для отправки показаний счётчиков по почте](docs/en/send.png)
+![Send page](docs/en/send.png)
 
 Letter preview:
 
-![Пример предпросмотра письма в интерфейсе приложения](docs/en/letter-preview.png)
+![Letter preview feature](docs/en/letter-preview.png)
 
 If company doesn't support direct mail send you can show a proper link and short manual:
 
-![Ссылка на сайт компании для отправки показаний](docs/en/unsupported-counters.png)
+![Link to utility company](docs/en/unsupported-counters.png)
 
 ## My story
 
@@ -65,6 +65,4 @@ Check `templates/example.txt`.
 
 ## RoadMap
 
-1. Support optional password access 
-2. Support state for each location
-3. Remind about data sending
+1. Remind about data sending

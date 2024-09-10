@@ -6,7 +6,15 @@ db-cnn: 'sqlite:///app/data/app.db?mode=rwc'
 
 # db-cnn: 'sqlite://app.db?mode=rwc'
 
-log-level: debug
+log-level: info
+
+auth:
+  enabled: true
+  password: 'J3q984SD384j34r9dfF'
+
+  # Используйте случайное значение.
+  # Используется для пользовательской сессии (JWT)
+  secret: '23FS0932fdfSD'
 
 locations:
   - name: 'Санкт-Петербург, Невский проспект, д.123, кв.27'

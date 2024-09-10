@@ -1,8 +1,50 @@
-import type {AppConfig} from "./config";
+import {type AppConfig, LocaleConfig} from "./config";
+
+export async function doLogin(password: string): Promise<string> {
+    const request = {
+        password: password
+    };
+
+    console.log('login attempt..');
+
+    const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(request)
+    });
+
+    if (response.status === 200) {
+        return response.text()
+
+    } else {
+        throw new Error('login error')
+    }
+}
 
 export async function fetchAppConfig(): Promise<AppConfig> {
     const response = await fetch('/api/config', {
-        method: 'GET'
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    if (response.status === 200) {
+        return response.json()
+
+    } else if (response.status === 401) {
+        location.href = '/login';
+        throw new Error('auth required')
+
+    } else {
+        throw new Error('config load error')
+    }
+}
+
+export async function fetchLocaleConfig(): Promise<LocaleConfig> {
+    const response = await fetch('/api/config/locale', {
+        method: 'GET',
     });
 
     if (response.status === 200) {
@@ -22,11 +64,16 @@ export async function fetchMailTemplate(locationName: string, counterName: strin
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(counterData)
     });
 
     if (response.status === 200) {
         return response.json()
+
+    } else if (response.status === 401) {
+        location.href = '/login';
+        throw new Error('auth required')
 
     } else {
         throw new Error('mail template fetch error')
@@ -62,11 +109,16 @@ export async function checkIfCounterDataAlreadySent(email: string, accountId: st
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(counterData)
     });
 
     if (response.status === 200) {
         return response.json()
+
+    } else if (response.status === 401) {
+        location.href = '/login';
+        throw new Error('auth required')
 
     } else {
         throw new Error('mail template fetch error')
@@ -82,11 +134,16 @@ export async function sendCounterData(locationName: string, counterName: string,
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(report)
     });
 
     if (response.status === 200) {
         return response.statusText
+
+    } else if (response.status === 401) {
+        location.href = '/login';
+        throw new Error('auth required')
 
     } else {
         throw new Error('config load error')

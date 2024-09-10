@@ -4,6 +4,10 @@ locale:
   header: 'Send utilities data'
   app-error-msg: 'Application error'
 
+  login-text: 'Your password:'
+  login-button: 'Enter'
+  login-error-msg: 'Invalid password'
+
   # Send page
   select-location-label: 'Select location:'
   select-location-dropdown: '- Select -'
